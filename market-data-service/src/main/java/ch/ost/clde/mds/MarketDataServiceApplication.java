@@ -1,4 +1,4 @@
-package ch.ost.clde.market_data_service;
+package ch.ost.clde.mds;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: market-data-service
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/market_data}
+    username: ${DATASOURCE_USERNAME:marketdata}
+    password: ${DATASOURCE_PASSWORD:secret}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop   # oder validate/create-drop je nach Bedarf
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    admin:
+      auto-create: true
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,loggers
+  endpoint:
+    health:
+      show-details: always
+
+mds:
+  job:
+    fixedRate: 1000

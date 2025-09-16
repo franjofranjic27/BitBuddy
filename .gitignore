@@ -1,0 +1,40 @@
+### Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/maven-wrapper-downloader.jar
+.mvn/wrapper/maven-wrapper.sh
+.mvn/wrapper/maven-wrapper.cmd
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+### OS generated files ###
+.DS_Store
+Thumbs.db
+
+### Logs & Temp ###
+logs/
+*.log
+*.out
+*.err
+
+### Spring Boot specific ###
+# Embedded DB files (H2, Derby, HSQLDB)
+*.db
+*.h2.db
+*.mv.db
+*.trace.db
+
+### Docker ###
+*.pid
+docker-compose.override.yml
+
+### Test output ###
+test-output/
+surefire-reports/
+failsafe-reports/

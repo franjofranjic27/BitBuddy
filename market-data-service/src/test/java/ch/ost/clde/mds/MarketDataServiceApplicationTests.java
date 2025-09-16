@@ -1,4 +1,4 @@
-package ch.ost.clde.market_data_service;
+package ch.ost.clde.mds;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
