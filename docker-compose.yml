@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  # --- Service 1: Market Data ---
+  market-data-service:
+    build: ./service-market-data
+    container_name: market-data-service
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://market-data-db:5432/market_data
+      - SPRING_DATASOURCE_USERNAME=marketdata
+      - SPRING_DATASOURCE_PASSWORD=secret
+    depends_on:
+      - market-data-db
+
+  market-data-db:
+    image: postgres:16
+    container_name: market-data-db
+    environment:
+      - POSTGRES_DB=market_data
+      - POSTGRES_USER=marketdata
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5433:5432"  # extern erreichbar für Debug
+
+  # --- Service 2: Trade Decision ---
+  trade-decision-service:
+    build: ./service-decision
+    container_name: trade-decision-service
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://trade-decision-db:5432/trade_decision
+      - SPRING_DATASOURCE_USERNAME=decision
+      - SPRING_DATASOURCE_PASSWORD=secret
+    depends_on:
+      - trade-decision-db
+
+  trade-decision-db:
+    image: postgres:16
+    container_name: trade-decision-db
+    environment:
+      - POSTGRES_DB=trade_decision
+      - POSTGRES_USER=decision
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5434:5432"
+
+  # --- Service 3: Order Execution ---
+  order-execution-service:
+    build: ./service-execution
+    container_name: order-execution-service
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://order-execution-db:5432/order_execution
+      - SPRING_DATASOURCE_USERNAME=execution
+      - SPRING_DATASOURCE_PASSWORD=secret
+    depends_on:
+      - order-execution-db
+
+  order-execution-db:
+    image: postgres:16
+    container_name: order-execution-db
+    environment:
+      - POSTGRES_DB=order_execution
+      - POSTGRES_USER=execution
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5435:5432"
