@@ -1,6 +1,6 @@
 package ch.ost.clde.mds.entity;
 
-import ch.ost.clde.mds.dto.MarketDataDto;
+import ch.ost.clde.dto.MarketDataDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

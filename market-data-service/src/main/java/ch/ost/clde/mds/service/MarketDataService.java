@@ -1,6 +1,6 @@
 package ch.ost.clde.mds.service;
 
-import ch.ost.clde.mds.dto.MarketDataDto;
+import ch.ost.clde.dto.MarketDataDto;
 import ch.ost.clde.mds.entity.MarketDataEntity;
 import ch.ost.clde.mds.kafka.MarketDataProducer;
 import ch.ost.clde.mds.repository.MarketDataRepository;

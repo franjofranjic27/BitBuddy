@@ -1,6 +1,6 @@
 package ch.ost.clde.mds.service;
 
-import ch.ost.clde.mds.dto.MarketDataDto;
+import ch.ost.clde.dto.MarketDataDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 

@@ -7,14 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="order-execution-service" />
         <module name="market-data-service" />
+        <module name="order-execution-service" />
+        <module name="common" />
         <module name="order-decision-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="common" options="-parameters" />
       <module name="market-data-service" options="-parameters" />
       <module name="order-decision-service" options="-parameters" />
       <module name="order-execution-service" options="-parameters" />

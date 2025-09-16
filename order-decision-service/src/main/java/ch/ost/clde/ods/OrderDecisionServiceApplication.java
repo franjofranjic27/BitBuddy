@@ -1,4 +1,4 @@
-package ch.ost.clde.order_decision_service;
+package ch.ost.clde.ods;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

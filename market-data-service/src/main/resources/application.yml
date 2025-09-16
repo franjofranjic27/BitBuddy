@@ -37,4 +37,4 @@ management:
 
 mds:
   job:
-    fixedRate: 1000
+    fixedRate: 10000

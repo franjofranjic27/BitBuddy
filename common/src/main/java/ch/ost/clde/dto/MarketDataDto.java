@@ -1,12 +1,12 @@
-package ch.ost.clde.mds.dto;
+package ch.ost.clde.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class MarketDataDto {
     private String symbol;
     private double price;

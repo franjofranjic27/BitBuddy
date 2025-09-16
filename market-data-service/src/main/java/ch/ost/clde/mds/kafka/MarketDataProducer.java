@@ -1,6 +1,6 @@
 package ch.ost.clde.mds.kafka;
 
-import ch.ost.clde.mds.dto.MarketDataDto;
+import ch.ost.clde.dto.MarketDataDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

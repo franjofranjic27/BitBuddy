@@ -1,6 +1,5 @@
 package ch.ost.clde.mds.job;
 
-import ch.ost.clde.mds.dto.MarketDataDto;
 import ch.ost.clde.mds.service.MarketDataService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
