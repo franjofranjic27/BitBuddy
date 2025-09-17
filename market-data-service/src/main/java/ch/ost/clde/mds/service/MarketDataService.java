@@ -21,7 +21,5 @@ public class MarketDataService {
         MarketDataDto marketDataDto = marketDataClient.getTicker(symbol);
         marketDataRepository.save(new MarketDataEntity(marketDataDto));
         marketDataProducer.send(marketDataDto);
-
-        log.info("Fetching market data at {} with Ticker: {}", System.currentTimeMillis(), marketDataDto);
     }
 }
