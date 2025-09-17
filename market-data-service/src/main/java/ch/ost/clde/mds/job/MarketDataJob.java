@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MarketDataJob {
-    private static final Logger log = LoggerFactory.getLogger(MarketDataJob.class);
 
     private final MarketDataService marketDataService;
 

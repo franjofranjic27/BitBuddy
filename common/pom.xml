@@ -14,7 +14,6 @@
 
 
     <dependencies>
-        <!-- Lombok, falls du es auch dort nutzen willst -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

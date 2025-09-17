@@ -1,9 +1,9 @@
 spring:
   application:
-    name: market-data-service
+    name: order-execution-service
   datasource:
-    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/market_data}
-    username: ${DATASOURCE_USERNAME:marketdata}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5434/order_execution}
+    username: ${DATASOURCE_USERNAME:orderexecution}
     password: ${DATASOURCE_PASSWORD:secret}
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -13,16 +13,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  kafka:
-    admin:
-      auto-create: true
-    bootstrap-servers: localhost:9093
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
-  port: 8080
+  port: 8082
   servlet:
     context-path: /api
 
@@ -34,7 +27,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-mds:
-  job:
-    fixedRate: 10000
