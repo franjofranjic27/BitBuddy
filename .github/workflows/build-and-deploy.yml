@@ -44,5 +44,6 @@ jobs:
 
       - name: Push Docker images
         run: |
+          SHORT_SHA=${GITHUB_SHA: -8}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:${SHORT_SHA}
