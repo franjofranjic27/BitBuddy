@@ -42,15 +42,15 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # 3. Build Docker Image
-#      - name: Build Docker image
-#        run: |
-#          docker build \
-#            -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest \
-#            -f ${{ matrix.service }}/Dockerfile \
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t bitbuddy/${{ matrix.service }}:latest \
+            -f ${{ matrix.service }}/docker/Dockerfile \
 
       # 4. Push Image
-#      - name: Push Docker image
-#        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
+      - name: Push Docker image
+        run: docker push bitbuddy/${{ matrix.service }}:latest
 
 #  docker:
 #    runs-on: ubuntu-latest
