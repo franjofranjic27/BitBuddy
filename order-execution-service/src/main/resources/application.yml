@@ -2,8 +2,8 @@ spring:
   application:
     name: order-execution-service
   datasource:
-    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5434/order_execution}
-    username: ${DATASOURCE_USERNAME:orderexecution}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5435/order_execution}
+    username: ${DATASOURCE_USERNAME:execution}
     password: ${DATASOURCE_PASSWORD:secret}
     driver-class-name: org.postgresql.Driver
   jpa:

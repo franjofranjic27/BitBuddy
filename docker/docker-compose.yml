@@ -4,11 +4,12 @@ services:
   # --- Service 1: Market Data ---
   market-data-service:
     image: docker.io/franjofranjic/market-data-service:latest
+    pull_policy: always
     container_name: market-data-service
     ports:
       - "8081:8080"
     environment:
-      - DATASOURCE_URL=jdbc:postgresql://market-data-db:5433/market_data
+      - DATASOURCE_URL=jdbc:postgresql://market-data-db:5432/market_data
       - DATASOURCE_USERNAME=marketdata
       - DATASOURCE_PASSWORD=secret
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
@@ -28,11 +29,12 @@ services:
   # --- Service 2: Trade Decision ---
   order-decision-service:
     image: docker.io/franjofranjic/order-decision-service:latest
+    pull_policy: always
     container_name: trade-decision-service
     ports:
       - "8082:8080"
     environment:
-      - DATASOURCE_URL=jdbc:postgresql://order-decision-db:5434/order_decision
+      - DATASOURCE_URL=jdbc:postgresql://order-decision-db:5432/order_decision
       - DATASOURCE_USERNAME=orderdecision
       - DATASOURCE_PASSWORD=secret
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
@@ -52,6 +54,7 @@ services:
   # --- Service 3: Order Execution ---
   order-execution-service:
     image: docker.io/franjofranjic/order-execution-service
+    pull_policy: always
     container_name: order-execution-service
     ports:
       - "8083:8080"
