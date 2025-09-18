@@ -51,7 +51,7 @@ jobs:
 
       # 4. Push Image
       - name: Push Docker image
-        run: docker push bitbuddy/${{ matrix.service }}:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
 
 #  docker:
 #    runs-on: ubuntu-latest
