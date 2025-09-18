@@ -6,7 +6,6 @@
         <groupId>ch.ost.clde</groupId>
         <artifactId>bitbuddy</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 	<artifactId>order-decision-service</artifactId>
 	<name>order-decision-service</name>

@@ -6,7 +6,6 @@
         <groupId>ch.ost.clde</groupId>
         <artifactId>bitbuddy</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 	<artifactId>market-data-service</artifactId>
 	<name>market-data-service</name>
