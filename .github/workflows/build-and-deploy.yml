@@ -45,7 +45,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build \
-            -t bitbuddy/${{ matrix.service }}:latest \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest \
             -f ${{ matrix.service }}/docker/Dockerfile \
             ${{ matrix.service }}
 
