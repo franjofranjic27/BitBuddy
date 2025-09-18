@@ -1,0 +1,24 @@
+name: helm verify
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-test-docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [ market-data-service, order-decision-service, order-execution-service ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: v3.17.0
+
+      - name: Lint Helm Chart
+        run: helm lint helm/
+
+      - name: Generate Template for Services
+        run: helm template ${{ matrix.service }} helm/ -f ${{ matrix.service }}/helm/values.yaml
