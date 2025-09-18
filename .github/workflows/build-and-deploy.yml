@@ -47,6 +47,7 @@ jobs:
           docker build \
             -t bitbuddy/${{ matrix.service }}:latest \
             -f ${{ matrix.service }}/docker/Dockerfile \
+            .
 
       # 4. Push Image
       - name: Push Docker image
