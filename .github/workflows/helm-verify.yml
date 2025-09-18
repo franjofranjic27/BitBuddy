@@ -21,4 +21,4 @@ jobs:
         run: helm lint helm/
 
       - name: Generate Template for Services
-        run: helm template ${{ matrix.service }} helm/ -f ${{ matrix.service }}/helm/values.yaml
+        run: helm template ${{ matrix.service }} helm/ -f ${{ matrix.service }}/helm/values.yml
