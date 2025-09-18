@@ -4,18 +4,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-test-docker:
+  helm-verify:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         service: [ market-data-service, order-decision-service, order-execution-service ]
+    name: Helm Verify (${{ matrix.service }})
+    env:
+      HELM_VERSION: v3.17.0
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Helm
         uses: azure/setup-helm@v4.2.0
         with:
-          version: v3.17.0
+          version: ${{ env.HELM_VERSION }}
 
       - name: Lint Helm Chart
         run: helm lint helm/
