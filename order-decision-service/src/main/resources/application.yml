@@ -2,10 +2,17 @@ spring:
   application:
     name: order-decision-service
   datasource:
-    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5434/order_decision}
-    username: ${DATASOURCE_USERNAME:orderdecision}
-    password: ${DATASOURCE_PASSWORD:secret}
-    driver-class-name: org.postgresql.Driver
+    marketdata:
+      url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/market_data}
+      username: ${DATASOURCE_USERNAME:marketdata}
+      password: ${DATASOURCE_PASSWORD:secret}
+      driver-class-name: org.postgresql.Driver
+
+    orderdecision:
+      url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5434/order_decision}
+      username: ${DATASOURCE_USERNAME:orderdecision}
+      password: ${DATASOURCE_PASSWORD:secret}
+      driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop   # oder validate/create-drop je nach Bedarf
@@ -33,3 +40,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+ods:
+  trading-pairs:
+    - BTC/USDT
+    - ETH/USDT
+    - SOL/USDT

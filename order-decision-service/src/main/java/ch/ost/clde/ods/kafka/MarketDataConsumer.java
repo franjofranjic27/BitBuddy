@@ -16,7 +16,6 @@ public class MarketDataConsumer {
 
     @KafkaListener(topics = "market-data-topic", groupId = "order-decision-service-group")
     public void consume(MarketDataDto marketDataDto) {
-        log.info("Received from Kafka: {}", marketDataDto);
         orderDecisionService.processTicker(marketDataDto);
     }
 }
