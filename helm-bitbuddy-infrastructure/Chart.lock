@@ -1,0 +1,24 @@
+dependencies:
+- name: kafka
+  repository: https://charts.bitnami.com/bitnami
+  version: 26.2.0
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 62.7.0
+- name: loki-stack
+  repository: https://grafana.github.io/helm-charts
+  version: 2.9.11
+- name: sonarqube
+  repository: https://SonarSource.github.io/helm-chart-sonarqube
+  version: 10.5.0+2748
+- name: keycloak
+  repository: https://charts.bitnami.com/bitnami
+  version: 24.3.0
+- name: jaeger
+  repository: https://jaegertracing.github.io/helm-charts
+  version: 3.0.9
+- name: argo-cd
+  repository: https://argoproj.github.io/argo-helm
+  version: 7.3.4
+digest: sha256:2f776b03f18b3e8a05b4621928a0c8fff5710aeb98233de8d5ddae2f54640621
+generated: "2025-09-22T07:53:32.639985+02:00"

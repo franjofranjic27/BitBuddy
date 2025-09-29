@@ -5,7 +5,11 @@ import ch.ost.clde.oes.entity.OrderEntity;
 import ch.ost.clde.oes.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @AllArgsConstructor
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final OrderRepository repository;
+    private final KucoinService kucoinService;
 
     public OrderDto createOrder(OrderDto orderDto) {
         OrderEntity order = new OrderEntity();
@@ -23,6 +28,10 @@ public class OrderService {
         order.setType(orderDto.getType());
         repository.save(order);
         return orderDto;
+    }
+
+    public void connect() {
+        kucoinService.connect();
     }
 }
 

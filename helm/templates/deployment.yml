@@ -22,15 +22,17 @@ spec:
             - containerPort: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            {{- toYaml .Values.envFrom | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /actuator/health/readiness
+              path: /api/actuator/health/readiness
               port: {{ .Values.service.port }}
             initialDelaySeconds: 10
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /actuator/health/liveness
+              path: /api/actuator/health/liveness
               port: {{ .Values.service.port }}
             initialDelaySeconds: 30
             periodSeconds: 20

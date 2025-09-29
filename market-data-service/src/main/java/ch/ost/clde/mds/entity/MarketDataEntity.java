@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "market_data")
 @Data
@@ -17,12 +19,22 @@ public class MarketDataEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String symbol;
-    private double price;
-
+    private String symbol;     // z. B. "BTC/USDT"
+    private double price;      // trade.getPrice().doubleValue()
+    private double amount;     // trade.getOriginalAmount().doubleValue()
+    private String type;       // BUY oder SELL
+    private String tradeId;    // eindeutige ID vom Exchange
+    private Instant timestamp; // Zeitpunkt des Trades
 
     public MarketDataEntity(MarketDataDto dto) {
         this.symbol = dto.getSymbol();
         this.price = dto.getPrice();
+        this.amount = dto.getAmount();
+        this.type = dto.getType();
+        this.tradeId = dto.getTradeId();
+        this.timestamp = dto.getTimestamp();
     }
 }
+
+
+

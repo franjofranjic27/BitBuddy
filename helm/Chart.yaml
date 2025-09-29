@@ -5,3 +5,7 @@ type: application
 version: 0.1.0
 appVersion: "1.0.0-SNAPSHOT"
 icon: "https://github.com/franjofranjic27/BitBuddy/tree/main/helm/Helm.svg"
+dependencies:
+  - name: postgresql
+    version: 12.1.5
+    repository: https://charts.bitnami.com/bitnami

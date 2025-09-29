@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,20 @@ public class OrderController {
     public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto dto) {
         OrderDto savedOrder = service.createOrder(dto);
         return ResponseEntity.ok(savedOrder);
+    }
+
+    @PostMapping("/buy")
+    public ResponseEntity<String> buy(@RequestParam String base,
+                                      @RequestParam String counter,
+                                      @RequestParam double amount) {
+        try {
+            log.info("Buying {} {} for {}", base, counter, amount);
+            service.connect();
+//            String response = kucoinService.placeMarketBuy(base, counter, amount);
+            return ResponseEntity.ok("Order placed: ");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error placing order: " + e.getMessage());
+        }
     }
 }

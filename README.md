@@ -46,3 +46,10 @@ mvn spring-boot:run
 docker-compose up --build
 ```
 
+
+```bash
+helm install market-data-service . -n bitbuddy-dev -f values.yaml   
+```
+```bash
+helm uninstall market-data-service -n bitbuddy-dev
+```

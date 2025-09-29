@@ -13,8 +13,17 @@ public class MarketDataProducer {
 
     private final KafkaTemplate<String, MarketDataDto> kafkaTemplate;
 
-    public void send(MarketDataDto marketDataDto) {
-        kafkaTemplate.send("market-data-topic", marketDataDto.getSymbol(), marketDataDto);
+    public void publishTrade(MarketDataDto marketDataDto) {
+        kafkaTemplate.send("market-data-topic", marketDataDto.getSymbol(), marketDataDto)
+                .whenComplete((result, ex) -> {
+                    if (ex != null) {
+                        log.error("Failed to publish trade to Kafka for {}: {}",
+                                marketDataDto.getSymbol(), ex.getMessage(), ex);
+                    } else {
+                        log.info("Published trade to Kafka: {}", marketDataDto);
+                    }
+                });
     }
+
 }
 

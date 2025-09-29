@@ -36,5 +36,12 @@ management:
       show-details: always
 
 mds:
-  job:
-    fixedRate: 10000
+  crypto:
+    pairs:
+      - BTC/USDT
+      - ETH/USDT
+      - ADA/USDT
+
+logging:
+  level:
+    info.bitrich.xchangestream.bitstamp.v2.BitstampStreamingService: ERROR

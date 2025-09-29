@@ -1,13 +1,29 @@
-replicaCount: 2
+replicaCount: 1
 
 image:
-  repository: myregistry/my-spring-service
+  repository: docker.io/franjofranjic
   tag: latest
   pullPolicy: IfNotPresent
 
-service:
-  type: ClusterIP
-  port: 8080
+postgresql:
+  auth:
+    postgresPassword: admin1234
+    username: orderdecision
+    password: secret
+    database: order_decision
+
+datasource:
+  username: orderdecision
+  password: secret
+  url: jdbc:postgresql://order-decision-service-postgresql:5432/order_decision
+
+kafkaBootstrapServer: "bitbuddy-kafka:9092"
+
+envFrom:
+  - secretRef:
+      name: order-decision-datasource-secret
+  - configMapRef:
+      name: kafka-config
 
 resources:
   limits:
@@ -17,17 +33,14 @@ resources:
     cpu: "250m"
     memory: "256Mi"
 
-# Route (nur für OpenShift)
-route:
-  enabled: true
-  host: ""   # falls leer, wird automatisch generiert
+service:
+  type: LoadBalancer
+  port: 8080
+  targetPort: 8080
 
 # HPA
 hpa:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 80
+  enabled: false
 
 # PodDisruptionBudget
 pdb:
