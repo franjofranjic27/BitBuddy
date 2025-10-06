@@ -27,3 +27,6 @@ management:
   endpoint:
     health:
       show-details: always
+
+trading:
+  exchange-hot: false   # set to true in production

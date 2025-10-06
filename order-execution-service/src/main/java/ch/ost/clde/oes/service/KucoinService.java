@@ -1,28 +1,23 @@
 package ch.ost.clde.oes.service;
 
-import ch.ost.clde.oes.config.KucoinProperties;
 import lombok.AllArgsConstructor;
-import org.knowm.xchange.currency.CurrencyPair;
-import org.knowm.xchange.dto.Order;
+import lombok.extern.slf4j.Slf4j;
 import org.knowm.xchange.dto.trade.MarketOrder;
 import org.knowm.xchange.service.trade.TradeService;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @AllArgsConstructor
-public class KucoinService {
+public class KucoinService implements ExchangeService {
 
-    private final KucoinProperties properties;
+    private final TradeService tradeService;
 
-//    private final TradeService tradeService;
-
-    public void connect() {
-        System.out.println("API Key: " + properties.getKey());
+    public void placeMarketOrder(MarketOrder marketOrder) {
+        try {
+            tradeService.placeMarketOrder(marketOrder);
+        } catch (Exception e) {
+            log.error("Error placing market order: {}", e.getMessage(), e);
+        }
     }
-
-//    public String placeMarketBuy(String base, String counter, double amount) throws Exception {
-//        CurrencyPair pair = new CurrencyPair(base, counter); // e.g. BTC/USDT
-//        MarketOrder order = new MarketOrder(Order.OrderType.BID, amount, pair);
-//        return tradeService.placeMarketOrder(order).toString();
-//    }
 }

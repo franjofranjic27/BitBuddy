@@ -2,22 +2,25 @@ package ch.ost.clde.ods.service;
 
 import ch.ost.clde.dto.MarketDataDto;
 import ch.ost.clde.ods.config.OrderDecisionProperties;
+import ch.ost.clde.ods.kafka.MarketOrderProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 class OrderDecisionServiceTest {
 
     private OrderDecisionService service;
-    private OrderDecisionProperties properties;
 
     @BeforeEach
     void setUp() {
-        properties = new OrderDecisionProperties();
+        OrderDecisionProperties properties = new OrderDecisionProperties();
         properties.setTradingPairs(List.of("BTC/USDT"));
-        service = new OrderDecisionService(properties);
+        MarketOrderProducer mockProducer = mock(MarketOrderProducer.class);
+        service = new OrderDecisionService(properties, mockProducer);
     }
 
     private MarketDataDto dto(double price) {

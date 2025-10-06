@@ -6,11 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "kucoin.api")
-public class KucoinProperties {
-
-    private String key;
-    private String secret;
-    private String passphrase;
+@ConfigurationProperties(prefix = "trading")
+public class TradingProperties {
+    private boolean exchangeHot;
 }
-

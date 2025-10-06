@@ -1,4 +1,4 @@
-package ch.ost.clde.ods.utility;
+package ch.ost.clde.ods.domain;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

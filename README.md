@@ -23,12 +23,14 @@ Each service has its own database and responsibilities.
 
 ---
 
-## ▶️ Getting Started
 
-### Prerequisites
+## Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) & Docker Compose
 - JDK 21
 - Maven 3.9+
+
+## ▶️ Getting Started
+
 
 ### Run Infrastructure (DBs + Kafka + RabbitMQ)
 ```bash

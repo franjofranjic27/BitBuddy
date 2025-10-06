@@ -1,5 +1,6 @@
 package ch.ost.clde.ods.utility;
 
+import ch.ost.clde.ods.domain.MovingAverageCalculator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
