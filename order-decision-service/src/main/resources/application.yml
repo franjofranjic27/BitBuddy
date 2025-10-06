@@ -18,6 +18,8 @@ spring:
       ddl-auto: create-drop   # oder validate/create-drop je nach Bedarf
     show-sql: false
   kafka:
+    admin:
+      auto-create: true
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       auto-offset-reset: latest
@@ -26,6 +28,9 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "ch.ost.clde.dto"   # dein common DTO-Package
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
   port: 8081

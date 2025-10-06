@@ -3,6 +3,8 @@ version: "3.9"
 services:
   # --- Service 1: Market Data ---
   market-data-service:
+    profiles:
+      - app
     image: docker.io/franjofranjic/market-data-service:latest
     pull_policy: always
     container_name: market-data-service
@@ -28,6 +30,8 @@ services:
 
   # --- Service 2: Trade Decision ---
   order-decision-service:
+    profiles:
+      - app
     image: docker.io/franjofranjic/order-decision-service:latest
     pull_policy: always
     container_name: trade-decision-service
@@ -53,6 +57,8 @@ services:
 
   # --- Service 3: Order Execution ---
   order-execution-service:
+    profiles:
+      - app
     image: docker.io/franjofranjic/order-execution-service
     pull_policy: always
     container_name: order-execution-service

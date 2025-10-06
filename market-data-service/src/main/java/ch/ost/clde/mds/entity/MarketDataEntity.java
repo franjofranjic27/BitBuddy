@@ -27,7 +27,7 @@ public class MarketDataEntity {
     private Instant timestamp; // Zeitpunkt des Trades
 
     public MarketDataEntity(MarketDataDto dto) {
-        this.symbol = dto.getSymbol();
+        this.symbol = dto.getBase() + "/" + dto.getCounter();
         this.price = dto.getPrice();
         this.amount = dto.getAmount();
         this.type = dto.getType();

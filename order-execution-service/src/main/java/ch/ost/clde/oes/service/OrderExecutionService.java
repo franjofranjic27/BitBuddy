@@ -28,8 +28,10 @@ public class OrderExecutionService {
         if (tradingProperties.isExchangeHot()) {
             exchangeService.placeMarketOrder(marketOrder);
         } else {
-            log.info("EXCHANGE_HOT=false → Skipping real execution for {}", marketOrder);
+            log.debug("EXCHANGE_HOT=false → Skipping real execution for {}", marketOrder);
         }
+
+        log.info("Executed {}", marketOrderDto);
 
         repository.save(MarketOrderEntity.from(marketOrder));
     }

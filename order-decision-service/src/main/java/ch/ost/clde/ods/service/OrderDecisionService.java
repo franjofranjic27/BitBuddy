@@ -25,13 +25,15 @@ public class OrderDecisionService {
     private final Map<String, SymbolMovingAverages> symbolCalculators = new ConcurrentHashMap<>();
 
     public void processTicker(MarketDataDto dto) {
-        if (!isTradable(dto.getSymbol())) return;
+        String symbol = dto.getBase() + "/" + dto.getCounter();
 
-        SymbolMovingAverages ma = getMovingAverages(dto.getSymbol());
+        if (!isTradable(symbol)) return;
+
+        SymbolMovingAverages ma = getMovingAverages(symbol);
         CrossState crossState = detectCross(ma, dto.getPrice());
 
         crossState.ifChangedFrom(ma.getLastState(), (oldState, newState) -> {
-            handleCrossSignal(dto.getSymbol(), newState);
+            handleCrossSignal(dto.getBase(), dto.getCounter(), newState);
             ma.setLastState(newState);
         });
     }
@@ -48,7 +50,7 @@ public class OrderDecisionService {
         double avg5 = ma.getMa5().add(price);
         double avg7 = ma.getMa7().add(price);
 
-        log.info("Averages for {}: 5={}, 7={}", ma, avg5, avg7);
+        log.debug("Averages for {}: 5={}, 7={}", ma, avg5, avg7);
 
         if (!ma.getMa5().isFull() || !ma.getMa7().isFull()) return CrossState.NONE;
         if (avg5 > avg7) return CrossState.ABOVE;
@@ -56,24 +58,24 @@ public class OrderDecisionService {
         return CrossState.NONE;
     }
 
-    private void handleCrossSignal(String symbol, CrossState newState) {
+    private void handleCrossSignal(String base, String counter, CrossState newState) {
         if (newState == CrossState.ABOVE) {
-            publishOrder(symbol, OrderType.BID); // BUY
-            log.info("Golden Cross (BUY) for {}", symbol);
+            publishOrder(base, counter, OrderType.BID); // BUY
+            log.info("Golden Cross (BUY) for {}", base + "/" + counter);
         } else if (newState == CrossState.BELOW) {
-            publishOrder(symbol, OrderType.ASK); // SELL
-            log.info("Death Cross (SELL) for {}", symbol);
+            publishOrder(base, counter, OrderType.ASK); // SELL
+            log.info("Death Cross (SELL) for {}", base + "/" + counter);
         }
     }
 
-    private void publishOrder(String symbol, OrderType type) {
-        marketOrderProducer.publishOrder(buildOrderDto(symbol, type));
+    private void publishOrder(String base, String counter, OrderType type) {
+        marketOrderProducer.publishOrder(buildOrderDto(base, counter, type));
     }
 
-    private MarketOrderDto buildOrderDto(String symbol, OrderType type) {
+    private MarketOrderDto buildOrderDto(String base, String counter, OrderType type) {
         MarketOrderDto dto = new MarketOrderDto();
-        dto.setBase(symbol.substring(0, 3));
-        dto.setCounter(symbol.substring(3));
+        dto.setBase(base);
+        dto.setCounter(counter);
         dto.setOrderType(type);
         dto.setAmount(BigDecimal.valueOf(0.01)); // FIXME: dynamic position sizing later
         return dto;

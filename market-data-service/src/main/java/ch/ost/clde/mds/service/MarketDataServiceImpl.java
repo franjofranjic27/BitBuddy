@@ -7,7 +7,6 @@ import ch.ost.clde.mds.repository.MarketDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.knowm.xchange.currency.CurrencyPair;
-import org.knowm.xchange.dto.marketdata.OrderBook;
 import org.knowm.xchange.dto.marketdata.Trade;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +23,9 @@ public class MarketDataServiceImpl implements MarketDataService {
 
     @Override
     public void processTrade(CurrencyPair pair, Trade trade) {
-        log.info("Streaming trade received for {}: {}", pair, trade);
-
         MarketDataDto dto = new MarketDataDto(
-                pair.toString(),
+                pair.getBase().toString(),
+                pair.getCounter().toString(),
                 trade.getPrice().doubleValue(),
                 trade.getOriginalAmount().doubleValue(),
                 trade.getType() != null ? trade.getType().toString() : null,

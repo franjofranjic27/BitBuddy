@@ -12,7 +12,9 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 public class MarketDataDto {
-    private String symbol;
+    //    private String symbol;
+    private String base;
+    private String counter;
     private double price;
     private double amount;
     private String type;

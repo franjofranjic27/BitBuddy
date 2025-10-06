@@ -14,7 +14,7 @@ public class MarketOrderConsumer {
 
     private final OrderExecutionService orderExecutionService;
 
-    @KafkaListener(topics = "market-exeuction-topic", groupId = "order-execution-service-group")
+    @KafkaListener(topics = "market-order-topic", groupId = "order-execution-service-group")
     public void consume(MarketOrderDto marketOrderDto) {
         orderExecutionService.executeOrder(marketOrderDto);
     }
