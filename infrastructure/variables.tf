@@ -81,17 +81,17 @@ variable "rds_allocated_storage" {
   default     = 5
 }
 variable "enable_rds" {
-  type = bool,
+  type    = bool
   default = false
 }
 
 variable "enable_msk" {
-  type = bool,
+  type    = bool
   default = false
 }
 
-variable "deploy_helm_services"  {
-  type = bool,
+variable "deploy_helm_services" {
+  type    = bool
   default = false
 }
 

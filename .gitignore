@@ -38,3 +38,25 @@ docker-compose.override.yml
 test-output/
 surefire-reports/
 failsafe-reports/
+
+# Terraform state files
+terraform.tfstate
+terraform.tfstate.*
+*.tfstate.backup
+
+# Local Terraform configuration
+.terraform/
+.terraform.lock.hcl
+
+# Sensitive variable overrides
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
+terraform.tfplan
+
+# AWS credentials (if any were accidentally placed locally)
+*.pem
+*.key
+.aws/

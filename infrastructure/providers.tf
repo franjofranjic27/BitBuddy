@@ -50,3 +50,5 @@ provider "helm" {
       command     = "aws"
       args        = ["eks", "get-token", "--cluster-name", module.eks.cluster_name, "--region", var.aws_region]
     }
+  }
+}

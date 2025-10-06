@@ -23,9 +23,9 @@ output "eks_cluster_endpoint" {
   description = "EKS API endpoint"
 }
 
-output "msk_bootstrap_brokers_sasl_iam" {
-  value       = var.enable_msk ? data.aws_msk_bootstrap_brokers_v2.this[0].bootstrap_broker_string_sasl_iam : null
-  description = "MSK bootstrap brokers (SASL/IAM)"
+output "msk_cluster_arn" {
+  value       = var.enable_msk ? aws_msk_serverless_cluster.this[0].arn : null
+  description = "ARN of the MSK Serverless cluster"
 }
 
 output "rds_endpoint" {
@@ -34,7 +34,7 @@ output "rds_endpoint" {
 }
 
 output "rds_connection_string" {
-  value       = "postgresql://${var.db_username}:${var.db_password}@${aws_db_instance.postgres.address}:5432/${var.db_name}"
+  value       = var.enable_rds ? "postgresql://${var.db_username}:${var.db_password}@${aws_db_instance.postgres[0].address}:5432/${var.db_name}" : null
   description = "RDS connection URI"
   sensitive   = true
 }

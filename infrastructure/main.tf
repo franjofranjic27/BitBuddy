@@ -124,7 +124,7 @@ module "eks" {
   subnet_ids                            = module.vpc.private_subnets
   cluster_additional_security_group_ids = [aws_security_group.eks_nodes.id]
 
-  manage_aws_auth_configmap = true
+  # manage_aws_auth_configmap = true
 
   eks_managed_node_groups = {
     default = {
@@ -160,7 +160,9 @@ resource "aws_msk_serverless_cluster" "this" {
 
   client_authentication {
     sasl {
-      iam = true
+      iam {
+        enabled = true
+      }
     }
   }
 
@@ -168,10 +170,10 @@ resource "aws_msk_serverless_cluster" "this" {
 }
 
 # MSK bootstrap broker string (IAM auth)
-data "aws_msk_bootstrap_brokers_v2" "this" {
-  count       = var.enable_msk ? 1 : 0
-  cluster_arn = aws_msk_serverless_cluster.this.arn
-}
+# data "aws_msk_bootstrap_brokers_v2" "this" {
+#   count       = var.enable_msk ? 1 : 0
+#   cluster_arn = aws_msk_serverless_cluster.this.arn
+# }
 
 ########################
 # RDS Postgres
