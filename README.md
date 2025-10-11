@@ -69,3 +69,8 @@ helm uninstall market-data-service -n bitbuddy-dev
 3. make sure you have aws cli installed
 4. on linux sudo nano ...
 5. on mac ... to paste your credentials
+
+=> Marc fragen ob wir keine Terraform berechtigung haben.
+=> aws cli geht auch nicht
+
+

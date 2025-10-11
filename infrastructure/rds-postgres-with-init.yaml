@@ -1,0 +1,76 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: RDS PostgreSQL (bitbuddy) + Auto-Init (3 Schemas) via EC2 Runner
+
+Mappings:
+  RegionMap:
+    us-east-1:
+      AMI: ami-0e86e20dae9224db8  # Amazon Linux 2
+
+Resources:
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: bitbuddy isolated subnet group
+      SubnetIds:
+        - !ImportValue bitbuddy-IsolatedSubnetA
+        - !ImportValue bitbuddy-IsolatedSubnetB
+
+  PostgresDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: bitbuddy
+      Engine: postgres
+      EngineVersion: '16.3'
+      DBName: bitbuddy
+      MasterUsername: bitbuddy
+      MasterUserPassword: passwort
+      AllocatedStorage: 20
+      DBInstanceClass: db.t3.micro
+      PubliclyAccessible: true
+      VPCSecurityGroups:
+        - !ImportValue bitbuddy-rds-sg
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      DeletionProtection: false
+      DeleteAutomatedBackups: true
+      BackupRetentionPeriod: 0
+
+  InitRunnerSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: bitbuddy-init-runner
+      VpcId: !ImportValue bitbuddy-VpcId
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+
+  InitRunnerInstance:
+    Type: AWS::EC2::Instance
+    DependsOn: PostgresDB
+    Properties:
+      ImageId: !FindInMap [ RegionMap, !Ref "AWS::Region", AMI ]
+      InstanceType: t3.micro
+      SubnetId: !ImportValue bitbuddy-IsolatedSubnetA
+      SecurityGroupIds:
+        - !ImportValue bitbuddy-rds-sg
+      InstanceInitiatedShutdownBehavior: terminate
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum -y install postgresql || yum -y install postgresql15
+          export PGPASSWORD="passwort"
+          for i in {1..30}; do
+            psql -h "${PostgresDB.Endpoint.Address}" -U bitbuddy -d bitbuddy -c "CREATE SCHEMA IF NOT EXISTS market_data AUTHORIZATION bitbuddy;" && \
+            psql -h "${PostgresDB.Endpoint.Address}" -U bitbuddy -d bitbuddy -c "CREATE SCHEMA IF NOT EXISTS order_decision AUTHORIZATION bitbuddy;" && \
+            psql -h "${PostgresDB.Endpoint.Address}" -U bitbuddy -d bitbuddy -c "CREATE SCHEMA IF NOT EXISTS order_execution AUTHORIZATION bitbuddy;" && \
+            break
+            sleep 10
+          done
+          shutdown -h now
+
+Outputs:
+  DBEndpoint:
+    Value: !GetAtt PostgresDB.Endpoint.Address
+  DBPort:
+    Value: !GetAtt PostgresDB.Endpoint.Port
+  DBNameOut:
+    Value: bitbuddy

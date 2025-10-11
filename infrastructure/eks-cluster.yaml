@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: EKS Control Plane (ohne Node Group) – Kubernetes 1.29
+
+Parameters:
+  ClusterName:
+    Type: String
+    Default: bitbuddy
+  KubernetesVersion:
+    Type: String
+    AllowedValues: [ '1.29', '1.28', '1.27' ]
+    Default: '1.29'
+  ClusterRoleArn:
+    Type: String
+    Description: ARN der LabEksClusterRole (aus IAM kopieren)
+  SubnetIdA:
+    Type: AWS::EC2::Subnet::Id
+    Description: Erstes Subnet (us-east-1x)
+  SubnetIdB:
+    Type: AWS::EC2::Subnet::Id
+    Description: Zweites Subnet (us-east-1y)
+  ClusterSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Security Group ID für den Cluster (z. B. Default-SG)
+
+Resources:
+  EksCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: !Ref ClusterName
+      Version: !Ref KubernetesVersion
+      RoleArn: !Ref ClusterRoleArn
+      ResourcesVpcConfig:
+        SubnetIds:
+          - !Ref SubnetIdA
+          - !Ref SubnetIdB
+        SecurityGroupIds:
+          - !Ref ClusterSecurityGroupId
+        EndpointPublicAccess: true
+        EndpointPrivateAccess: false
+      KubernetesNetworkConfig:
+        IpFamily: ipv4
+    # Hinweis: keine Nodegroups – reine Control Plane
+
+Outputs:
+  ClusterName:
+    Value: !Ref ClusterName
+  ClusterArn:
+    Value: !GetAtt EksCluster.Arn
+  ClusterEndpoint:
+    Value: !GetAtt EksCluster.Endpoint
+  ClusterCertificateAuthorityData:
+    Value: !GetAtt EksCluster.CertificateAuthorityData
