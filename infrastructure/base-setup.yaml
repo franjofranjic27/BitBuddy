@@ -287,10 +287,14 @@ Outputs:
       Name: bitbuddy-VpcId
   ALBDNSName:
     Value: !GetAtt ALB.DNSName
-  RdsSecurityGroupId:
-    Value: !Ref SGRDS
+  PrivateSubnetIdA:
+    Value: !Ref PrivateSubnet1
     Export:
-      Name: bitbuddy-rds-sg
+      Name: bitbuddy-PrivateSubnetA
+  PrivateSubnetIdB:
+    Value: !Ref PrivateSubnet2
+    Export:
+      Name: bitbuddy-PrivateSubnetB
   IsolatedSubnetIdA:
     Value: !Ref IsolatedSubnet1
     Export:
@@ -299,3 +303,11 @@ Outputs:
     Value: !Ref IsolatedSubnet2
     Export:
       Name: bitbuddy-IsolatedSubnetB
+  EksSecurityGroupId:
+    Value: !Ref SGEKS
+    Export:
+      Name: bitbuddy-eks-sg
+  RdsSecurityGroupId:
+    Value: !Ref SGRDS
+    Export:
+      Name: bitbuddy-rds-sg

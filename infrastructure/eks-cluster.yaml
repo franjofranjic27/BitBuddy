@@ -12,15 +12,6 @@ Parameters:
   ClusterRoleArn:
     Type: String
     Description: ARN der LabEksClusterRole (aus IAM kopieren)
-  SubnetIdA:
-    Type: AWS::EC2::Subnet::Id
-    Description: Erstes Subnet (us-east-1x)
-  SubnetIdB:
-    Type: AWS::EC2::Subnet::Id
-    Description: Zweites Subnet (us-east-1y)
-  ClusterSecurityGroupId:
-    Type: AWS::EC2::SecurityGroup::Id
-    Description: Security Group ID für den Cluster (z. B. Default-SG)
 
 Resources:
   EksCluster:
@@ -31,15 +22,51 @@ Resources:
       RoleArn: !Ref ClusterRoleArn
       ResourcesVpcConfig:
         SubnetIds:
-          - !Ref SubnetIdA
-          - !Ref SubnetIdB
+          - !ImportValue bitbuddy-privateSubnetA
+          - !ImportValue bitbuddy-privateSubnetB
         SecurityGroupIds:
-          - !Ref ClusterSecurityGroupId
+          - !ImportValue bitbuddy-eks-sg
         EndpointPublicAccess: true
-        EndpointPrivateAccess: false
+        EndpointPrivateAccess: true
       KubernetesNetworkConfig:
         IpFamily: ipv4
-    # Hinweis: keine Nodegroups – reine Control Plane
+
+  NodeInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      Path: /
+      Tags:
+        - Key: Name
+          Value: bitbuddy-node-role
+
+  EksNodeGroup:
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: !Ref EksCluster
+      NodegroupName: bitbuddy-nodes
+      NodeRole: !GetAtt NodeInstanceRole.Arn
+      Subnets:
+        - !ImportValue bitbuddy-PrivateSubnetA
+        - !ImportValue bitbuddy-PrivateSubnetB
+      ScalingConfig:
+        MinSize: 2
+        DesiredSize: 2
+        MaxSize: 4
+      DiskSize: 20
+      InstanceTypes:
+        - t3.medium
+      AmiType: AL2_x86_64
 
 Outputs:
   ClusterName:
