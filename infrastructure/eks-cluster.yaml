@@ -12,6 +12,9 @@ Parameters:
   ClusterRoleArn:
     Type: String
     Description: ARN der LabEksClusterRole (aus IAM kopieren)
+  NodeRoleArn:
+    Type: String
+    Description: ARN der LabEksNodeRole (aus IAM kopieren)
 
 Resources:
   EksCluster:
@@ -23,7 +26,7 @@ Resources:
       ResourcesVpcConfig:
         SubnetIds:
           - !ImportValue bitbuddy-PrivateSubnetA
-          - !ImportValue bitbuddy-PrivateSubnetA
+          - !ImportValue bitbuddy-PrivateSubnetB
         SecurityGroupIds:
           - !ImportValue bitbuddy-eks-sg
         EndpointPublicAccess: true
@@ -31,31 +34,12 @@ Resources:
       KubernetesNetworkConfig:
         IpFamily: ipv4
 
-  NodeInstanceRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: ec2.amazonaws.com
-            Action: sts:AssumeRole
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
-        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
-        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
-      Path: /
-      Tags:
-        - Key: Name
-          Value: bitbuddy-node-role
-
   EksNodeGroup:
     Type: AWS::EKS::Nodegroup
     Properties:
       ClusterName: !Ref EksCluster
       NodegroupName: bitbuddy-nodes
-      NodeRole: !GetAtt NodeInstanceRole.Arn
+      NodeRole: !Ref NodeRoleArn
       Subnets:
         - !ImportValue bitbuddy-PrivateSubnetA
         - !ImportValue bitbuddy-PrivateSubnetB
