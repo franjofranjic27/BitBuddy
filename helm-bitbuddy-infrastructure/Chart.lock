@@ -2,9 +2,6 @@ dependencies:
 - name: kafka
   repository: https://charts.bitnami.com/bitnami
   version: 26.2.0
-- name: kube-prometheus-stack
-  repository: https://prometheus-community.github.io/helm-charts
-  version: 62.7.0
 - name: loki-stack
   repository: https://grafana.github.io/helm-charts
   version: 2.9.11
@@ -20,5 +17,14 @@ dependencies:
 - name: argo-cd
   repository: https://argoproj.github.io/argo-helm
   version: 7.3.4
-digest: sha256:2f776b03f18b3e8a05b4621928a0c8fff5710aeb98233de8d5ddae2f54640621
-generated: "2025-09-22T07:53:32.639985+02:00"
+- name: generic-chart
+  repository: oci://registry-1.docker.io/franjofranjic
+  version: 0.1.0
+- name: generic-chart
+  repository: oci://registry-1.docker.io/franjofranjic
+  version: 0.1.0
+- name: generic-chart
+  repository: oci://registry-1.docker.io/franjofranjic
+  version: 0.1.0
+digest: sha256:502b84b762d49ed47db16168f74e715dd9e79eb85588d75e19320f7682e759ac
+generated: "2025-10-12T20:51:05.73621+02:00"

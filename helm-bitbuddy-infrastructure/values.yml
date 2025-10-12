@@ -1,7 +1,7 @@
 kafkaBootstrapServer: "bitbuddy-infrastructure-kafka:9092"
 
 kafka:
-  enabled: true
+  enabled: false
   replicaCount: 1
   listeners:
     client:
@@ -13,27 +13,26 @@ kafka:
         host: bitbuddy-kafka
         port: 9092
 
-
-prometheus:
-  enabled: true
+prometheus-stack:
+  enabled: false
   grafana:
     adminPassword: "admin"
     service:
       type: NodePort
 
 loki:
-  enabled: true
+  enabled: false
   grafana:
     enabled: false # wir nutzen Grafana aus Prometheus-Stack
   promtail:
-    enabled: true
+    enabled: false
 
 sonarqube:
   enabled: false
   service:
     type: NodePort
   postgresql:
-    enabled: true
+    enabled: false
 
 keycloak:
   enabled: false
@@ -49,7 +48,7 @@ jaeger:
     type: memory
 
 argocd:
-  enabled: true
+  enabled: false
   server:
     service:
       type: ClusterIP

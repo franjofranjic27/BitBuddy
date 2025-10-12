@@ -55,8 +55,6 @@ Resources:
 Outputs:
   ClusterName:
     Value: !Ref ClusterName
-  ClusterArn:
-    Value: !GetAtt EksCluster.Arn
   ClusterEndpoint:
     Value: !GetAtt EksCluster.Endpoint
   ClusterCertificateAuthorityData:

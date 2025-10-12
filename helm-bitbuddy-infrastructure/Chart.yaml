@@ -9,17 +9,16 @@ dependencies:
   - name: kafka
     version: 26.2.0
     repository: https://charts.bitnami.com/bitnami
-  # Prometheus
-  - name: kube-prometheus-stack
-    version: 62.7.0
-    repository: https://prometheus-community.github.io/helm-charts
   # Grafana Loki Stack (inkl. Promtail, Grafana optional)
   - name: loki-stack
     version: 2.9.11
+    alias: loki
+    condition: loki.enabled
     repository: https://grafana.github.io/helm-charts
   # SonarQube Community Edition
   - name: sonarqube
     version: 10.5.0
+    condition: sonarqube.enabled
     repository: https://SonarSource.github.io/helm-chart-sonarqube
   - name: keycloak
     version: 24.3.0

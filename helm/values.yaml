@@ -1,0 +1,112 @@
+# BitBuddy Services
+market-data-service:
+  enabled: false
+  global:
+    appName: 'market-data-service'
+  deployment:
+    image:
+      repository: docker.io/franjofranjic
+      tag: latest
+      pullPolicy: IfNotPresent
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+      - name: SPRING_DATASOURCE_USERNAME
+        value: orderexecution
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: secret
+    envFrom:
+      - secretRef:
+          name: bitbuddy-datasource-secret
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+      requests:
+        cpu: "250m"
+        memory: "256Mi"
+  service:
+    ports:
+      - name: http
+        port: 8080
+        targetPort: 8080
+
+order-decision-service:
+  enabled: false
+  global:
+    appName: 'order-decision-service'
+  deployment:
+    image:
+      repository: docker.io/franjofranjic
+      tag: latest
+      pullPolicy: IfNotPresent
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+      - name: SPRING_DATASOURCE_USERNAME
+        value: orderexecution
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: secret
+    envFrom:
+      - secretRef:
+          name: bitbuddy-datasource-secret
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+      requests:
+        cpu: "250m"
+        memory: "256Mi"
+  service:
+    ports:
+      - name: http
+        port: 8080
+        targetPort: 8080
+
+order-execution-service:
+  enabled: true
+  global:
+    appName: 'order-execution-service'
+  deployment:
+    image:
+      repository: docker.io/franjofranjic
+      tag: latest
+      pullPolicy: IfNotPresent
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+      - name: SPRING_DATASOURCE_USERNAME
+        value: orderexecution
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: secret
+    envFrom:
+      - secretRef:
+          name: bitbuddy-datasource-secret
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+      requests:
+        cpu: "250m"
+        memory: "256Mi"
+  service:
+    ports:
+      - name: http
+        port: 8080
+        targetPort: 8080
+
+datasource:
+  username: orderexecution
+  password: secret
+  url: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: admin1234
+    username: orderexecution
+    password: secret
+    database: order_execution
+
+kafka:
+  enabled: false
