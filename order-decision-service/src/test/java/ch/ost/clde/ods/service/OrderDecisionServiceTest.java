@@ -24,12 +24,12 @@ class OrderDecisionServiceTest {
     }
 
     private MarketDataDto dto(double price) {
-        return new MarketDataDto("BTC/USDT", price, 1.0, "BUY", "t1", Instant.now());
+        return new MarketDataDto("BTC", "USDT", price, 1.0, "BUY", "t1", Instant.now());
     }
 
     @Test
     void shouldIgnoreUnconfiguredSymbol() {
-        MarketDataDto ethDto = new MarketDataDto("ETH/USDT", 2000.0, 1.0, "BUY", "t2", Instant.now());
+        MarketDataDto ethDto = new MarketDataDto("ETH", "USDT", 2000.0, 1.0, "BUY", "t2", Instant.now());
         service.processTicker(ethDto);
         // kein Fehler, keine Exception, einfach ignoriert
     }
