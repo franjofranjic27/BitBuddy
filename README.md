@@ -31,6 +31,9 @@ Each service has its own database and responsibilities.
 - [Docker](https://docs.docker.com/get-docker/) & Docker Compose
 - JDK 21
 - Maven 3.9+
+- Helm
+- Kubectl
+- Minikube
 
 ## ▶️ Getting Started
 
@@ -53,24 +56,42 @@ mvn spring-boot:run
 docker-compose up --build
 ```
 
-```bash
-helm install market-data-service . -n bitbuddy-dev -f values.yaml   
-```
+## Deploy to Kubernetes (minikube)
+
+### Install
 
 ```bash
-helm uninstall market-data-service -n bitbuddy-dev
+cd helm
+minikube start
+helm install bitbuddy . -n bitbuddy-dev -f values.yaml   
 ```
 
-## Working with AWS
+then you can check logs:
+
+```bash
+kubectl get pods -n bitbuddy-dev
+kubectl logs <pod-name> -n bitbuddy-dev 
+```
+
+### Uninstall
+
+```bash
+helm uninstall bitbuddy -n bitbuddy-dev
+```
+
+## Deploying to AWS
 
 1. go to https://awsacademy.instructure.com/courses/136791/modules/items/13159531
 2. press on "Start Lab"
-3. under "AWS Details" you get the credentials you need to paste into your aws credentials file
-3. make sure you have aws cli installed
-4. on linux sudo nano ...
-5. on mac ... to paste your credentials
-
-=> Marc fragen ob wir keine Terraform berechtigung haben.
-=> aws cli geht auch nicht
-
+3. go to CloudFormation
+4. Create new Stack
+5. Upload template
+6. Create Stack
+7. Go to EC2
+8. Create new instance
+9. Go to RDS
+10. Create new instance
+11. Go to SQS
+12. Create new queue
+13. Go to SNS
 
