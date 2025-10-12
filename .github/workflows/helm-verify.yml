@@ -6,10 +6,7 @@ on:
 jobs:
   helm-verify:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        service: [ market-data-service, order-decision-service, order-execution-service ]
-    name: Helm Verify (${{ matrix.service }})
+    name: helm verify
     env:
       HELM_VERSION: v3.17.0
     steps:
@@ -24,4 +21,4 @@ jobs:
         run: helm lint helm/
 
       - name: Generate Template for Services
-        run: helm template ${{ matrix.service }} helm/ -f ${{ matrix.service }}/helm/values.yml
+        run: helm template bitbuddy helm/
