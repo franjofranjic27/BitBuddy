@@ -22,8 +22,8 @@ Resources:
       RoleArn: !Ref ClusterRoleArn
       ResourcesVpcConfig:
         SubnetIds:
-          - !ImportValue bitbuddy-privateSubnetA
-          - !ImportValue bitbuddy-privateSubnetB
+          - !ImportValue bitbuddy-PrivateSubnetA
+          - !ImportValue bitbuddy-PrivateSubnetA
         SecurityGroupIds:
           - !ImportValue bitbuddy-eks-sg
         EndpointPublicAccess: true
