@@ -1,18 +1,18 @@
 dependencies:
 - name: kafka
-  repository: https://charts.bitnami.com/bitnami
-  version: 26.2.0
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 32.4.3
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 18.0.11
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
-  version: 0.2.0
+  version: 0.2.1
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
-  version: 0.2.0
+  version: 0.2.1
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
-  version: 0.2.0
-digest: sha256:fee57ecaf39ce1e7390b1cb5384ef0b93c7cd9e65d4ff3a9798ae7f8cbb0ca8e
-generated: "2025-10-13T14:36:31.357303+02:00"
+  version: 0.2.1
+digest: sha256:47a5406ca476ab9669896d4a13ef4692b728cd7caa946ff5da4ee54a86dd27f6
+generated: "2025-10-13T15:20:26.460611+02:00"

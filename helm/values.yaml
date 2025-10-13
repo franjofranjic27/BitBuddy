@@ -8,21 +8,12 @@ market-data-service:
       repository: docker.io/franjofranjic
       tag: latest
       pullPolicy: Always
+    env:
+      - name: SERVER_PORT
+        value: "8080"
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
-    resources:
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
-      requests:
-        cpu: "250m"
-        memory: "256Mi"
-  service:
-    ports:
-      - name: http
-        port: 8080
-        targetPort: 8080
 
 order-decision-service:
   enabled: false
@@ -32,29 +23,13 @@ order-decision-service:
     image:
       repository: docker.io/franjofranjic
       tag: latest
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     env:
-      - name: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://bitbuddy-postgresql:5432/order_execution
-      - name: SPRING_DATASOURCE_USERNAME
-        value: orderexecution
-      - name: SPRING_DATASOURCE_PASSWORD
-        value: secret
+      - name: SERVER_PORT
+        value: "8080"
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
-    resources:
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
-      requests:
-        cpu: "250m"
-        memory: "256Mi"
-  service:
-    ports:
-      - name: http
-        port: 8080
-        targetPort: 8080
 
 order-execution-service:
   enabled: true
@@ -71,32 +46,54 @@ order-execution-service:
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
-    resources:
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
-      requests:
-        cpu: "250m"
-        memory: "256Mi"
-  service:
-    port: 8080
-    ports:
-      - name: http
-        port: 8080
-        targetPort: 8080
 
 datasource:
-  username: orderexecution
+  username: bitbuddy
   password: secret
-  url: jdbc:postgresql://bitbuddy-postgresql:5432/order_execution
+  url: jdbc:postgresql://bitbuddy-postgresql:5432/bitbuddy
 
 postgresql:
   enabled: true
   auth:
     postgresPassword: admin1234
-    username: orderexecution
+    username: bitbuddy
     password: secret
-    database: order_execution
+    database: bitbuddy
 
 kafka:
-  enabled: false
+  enabled: true
+  # Use KRaft mode (no Zookeeper)
+  kraft:
+    enabled: true
+  # Number of Kafka brokers (replicas)
+  replicaCount: 1
+  # Service ports
+  service:
+    type: ClusterIP
+    ports:
+      client: 9092
+      interBroker: 9093
+  # Listeners
+  listeners:
+    client:
+      protocol: PLAINTEXT
+    interBroker:
+      protocol: PLAINTEXT
+  # Advertised listeners (what clients see)
+  advertisedListeners:
+    client:
+      name: CLIENT
+      host: kafka.default.svc.cluster.local
+      port: 9092
+    interBroker:
+      name: INTERNAL
+      host: kafka-0.kafka-headless.default.svc.cluster.local
+      port: 9093
+  # Security protocol mapping
+  listenerSecurityProtocolMap: CLIENT:PLAINTEXT,INTERNAL:PLAINTEXT
+  # Broker-to-broker communication
+  interBrokerListenerName: INTERNAL
+  # Extra env vars (if you want to mirror your Compose setup more literally)
+  extraEnvVars:
+    - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+      value: "1"
