@@ -16,7 +16,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop   # oder validate/create-drop je nach Bedarf
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: order_decision
     show-sql: false
+  flyway:
+    enabled: true
+    schemas: order_decision
+    default-schema: order_decision
+    baseline-on-migrate: true
   kafka:
     admin:
       auto-create: true

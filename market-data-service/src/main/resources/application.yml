@@ -13,6 +13,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: market_data
+  flyway:
+    enabled: true
+    schemas: market_data
+    default-schema: market_data
+    baseline-on-migrate: true
   kafka:
     admin:
       auto-create: true

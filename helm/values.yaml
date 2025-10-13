@@ -1,6 +1,6 @@
 # BitBuddy Services
 market-data-service:
-  enabled: false
+  enabled: true
   global:
     appName: 'market-data-service'
   deployment:
@@ -11,9 +11,26 @@ market-data-service:
     env:
       - name: SERVER_PORT
         value: "8080"
+      - name: KAFKA_BOOTSTRAP_SERVERS
+        value: kafka:9092
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "1Gi"
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+    startupProbe:
+      httpGet:
+        path: /api/actuator/health
+        port: 8080
+      failureThreshold: 45
+      periodSeconds: 15
+      timeoutSeconds: 5
+      successThreshold: 1
 
 order-decision-service:
   enabled: false
@@ -27,12 +44,14 @@ order-decision-service:
     env:
       - name: SERVER_PORT
         value: "8080"
+      - name: KAFKA_BOOTSTRAP_SERVERS
+        value: kafka:9092
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
 
 order-execution-service:
-  enabled: true
+  enabled: false
   global:
     appName: 'order-execution-service'
   deployment:
@@ -43,6 +62,8 @@ order-execution-service:
     env:
       - name: SERVER_PORT
         value: "8080"
+      - name: KAFKA_BOOTSTRAP_SERVERS
+        value: kafka:9092
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
@@ -59,41 +80,3 @@ postgresql:
     username: bitbuddy
     password: secret
     database: bitbuddy
-
-kafka:
-  enabled: true
-  # Use KRaft mode (no Zookeeper)
-  kraft:
-    enabled: true
-  # Number of Kafka brokers (replicas)
-  replicaCount: 1
-  # Service ports
-  service:
-    type: ClusterIP
-    ports:
-      client: 9092
-      interBroker: 9093
-  # Listeners
-  listeners:
-    client:
-      protocol: PLAINTEXT
-    interBroker:
-      protocol: PLAINTEXT
-  # Advertised listeners (what clients see)
-  advertisedListeners:
-    client:
-      name: CLIENT
-      host: kafka.default.svc.cluster.local
-      port: 9092
-    interBroker:
-      name: INTERNAL
-      host: kafka-0.kafka-headless.default.svc.cluster.local
-      port: 9093
-  # Security protocol mapping
-  listenerSecurityProtocolMap: CLIENT:PLAINTEXT,INTERNAL:PLAINTEXT
-  # Broker-to-broker communication
-  interBrokerListenerName: INTERNAL
-  # Extra env vars (if you want to mirror your Compose setup more literally)
-  extraEnvVars:
-    - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
-      value: "1"
