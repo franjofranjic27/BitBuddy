@@ -45,7 +45,7 @@ public class OrderDecisionDbConfig {
 
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
-        emf.setPackagesToScan("ch.ost.clde.ods.entity.orderDecision");
+        emf.setPackagesToScan("ch.ost.clde.ods.entity.orderdecision");
         emf.setPersistenceUnitName("orderDecisionPU");
         emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
