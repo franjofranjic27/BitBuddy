@@ -2,8 +2,8 @@ spring:
   application:
     name: market-data-service
   datasource:
-    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/market_data}
-    username: ${DATASOURCE_USERNAME:marketdata}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/bitbuddy}
+    username: ${DATASOURCE_USERNAME:bitbuddy}
     password: ${DATASOURCE_PASSWORD:secret}
     driver-class-name: org.postgresql.Driver
   jpa:

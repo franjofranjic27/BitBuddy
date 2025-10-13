@@ -3,14 +3,14 @@ spring:
     name: order-decision-service
   datasource:
     marketdata:
-      url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/market_data}
-      username: ${DATASOURCE_USERNAME:marketdata}
+      url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/bitbuddy}
+      username: ${DATASOURCE_USERNAME:bitbuddy}
       password: ${DATASOURCE_PASSWORD:secret}
       driver-class-name: org.postgresql.Driver
 
     orderdecision:
-      url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5434/order_decision}
-      username: ${DATASOURCE_USERNAME:orderdecision}
+      url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/bitbuddy}
+      username: ${DATASOURCE_USERNAME:bitbuddy}
       password: ${DATASOURCE_PASSWORD:secret}
       driver-class-name: org.postgresql.Driver
   jpa:
@@ -22,10 +22,7 @@ spring:
         default_schema: order_decision
     show-sql: false
   flyway:
-    enabled: true
-    schemas: order_decision
-    default-schema: order_decision
-    baseline-on-migrate: true
+    enabled: false
   kafka:
     admin:
       auto-create: true

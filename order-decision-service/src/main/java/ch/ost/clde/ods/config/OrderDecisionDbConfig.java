@@ -1,8 +1,9 @@
 package ch.ost.clde.ods.config;
 
 import jakarta.persistence.EntityManagerFactory;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -60,5 +61,21 @@ public class OrderDecisionDbConfig {
     public PlatformTransactionManager orderDecisionTransactionManager(
             @Qualifier("orderDecisionEntityManagerFactory") EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
+    }
+
+    @Bean
+    public Flyway orderDecisionFlyway(@Qualifier("orderDecisionDataSource") DataSource dataSource) {
+        return Flyway.configure()
+                .dataSource(dataSource)
+                .schemas("order_decision")   // schema managed by Flyway
+                .defaultSchema("order_decision")
+                .locations("classpath:db/migration") // put migrations there
+                .baselineOnMigrate(true)
+                .load();
+    }
+
+    @Bean
+    public FlywayMigrationInitializer flywayInitializer(Flyway orderDecisionFlyway) {
+        return new FlywayMigrationInitializer(orderDecisionFlyway);
     }
 }
