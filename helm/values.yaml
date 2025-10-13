@@ -10,7 +10,7 @@ market-data-service:
       pullPolicy: IfNotPresent
     env:
       - name: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+        value: jdbc:postgresql://bitbuddy-postgresql:5432/order_execution
       - name: SPRING_DATASOURCE_USERNAME
         value: orderexecution
       - name: SPRING_DATASOURCE_PASSWORD
@@ -42,7 +42,7 @@ order-decision-service:
       pullPolicy: IfNotPresent
     env:
       - name: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+        value: jdbc:postgresql://bitbuddy-postgresql:5432/order_execution
       - name: SPRING_DATASOURCE_USERNAME
         value: orderexecution
       - name: SPRING_DATASOURCE_PASSWORD
@@ -73,12 +73,8 @@ order-execution-service:
       tag: latest
       pullPolicy: IfNotPresent
     env:
-      - name: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
-      - name: SPRING_DATASOURCE_USERNAME
-        value: orderexecution
-      - name: SPRING_DATASOURCE_PASSWORD
-        value: secret
+      - name: SERVER_PORT
+        value: "8080"
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
@@ -90,6 +86,7 @@ order-execution-service:
         cpu: "250m"
         memory: "256Mi"
   service:
+    port: 8080
     ports:
       - name: http
         port: 8080
@@ -98,7 +95,7 @@ order-execution-service:
 datasource:
   username: orderexecution
   password: secret
-  url: jdbc:postgresql://order-execution-service-postgresql:5432/order_execution
+  url: jdbc:postgresql://bitbuddy-postgresql:5432/order_execution
 
 postgresql:
   enabled: true

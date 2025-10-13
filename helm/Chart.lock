@@ -4,7 +4,7 @@ dependencies:
   version: 26.2.0
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 12.1.5
+  version: 18.0.11
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
   version: 0.1.0
@@ -14,5 +14,5 @@ dependencies:
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
   version: 0.1.0
-digest: sha256:76bd00bf2b0b9940d8dc336d375bf892c91c70eec7cbf7787b2bbc5c20cb462b
-generated: "2025-10-12T21:21:12.951059+02:00"
+digest: sha256:67e7dc837a8d7a1f712a44065e5c081541b02dd5c698d21ff4a088f2141cacaa
+generated: "2025-10-12T22:10:47.415168+02:00"
