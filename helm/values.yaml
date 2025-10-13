@@ -7,14 +7,7 @@ market-data-service:
     image:
       repository: docker.io/franjofranjic
       tag: latest
-      pullPolicy: IfNotPresent
-    env:
-      - name: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://bitbuddy-postgresql:5432/order_execution
-      - name: SPRING_DATASOURCE_USERNAME
-        value: orderexecution
-      - name: SPRING_DATASOURCE_PASSWORD
-        value: secret
+      pullPolicy: Always
     envFrom:
       - secretRef:
           name: bitbuddy-datasource-secret
@@ -71,7 +64,7 @@ order-execution-service:
     image:
       repository: docker.io/franjofranjic
       tag: latest
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
     env:
       - name: SERVER_PORT
         value: "8080"

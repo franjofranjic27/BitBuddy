@@ -2,7 +2,7 @@ apiVersion: v2
 name: bitbuddy-chart
 description: Helm chart for deploying BitBuddy
 type: application
-version: 0.1.0
+version: 0.2.0
 appVersion: "1.0.0-SNAPSHOT"
 icon: "https://github.com/franjofranjic27/BitBuddy/tree/main/helm/Helm.svg"
 dependencies:
@@ -15,17 +15,17 @@ dependencies:
     condition: postgresql.enabled
     repository: https://charts.bitnami.com/bitnami
   - name: generic-chart
-    version: 0.1.0
+    version: 0.2.0
     alias: market-data-service
     condition: market-data-service.enabled
     repository: oci://registry-1.docker.io/franjofranjic
   - name: generic-chart
-    version: 0.1.0
+    version: 0.2.0
     alias: order-decision-service
     condition: order-decision-service.enabled
     repository: oci://registry-1.docker.io/franjofranjic
   - name: generic-chart
-    version: 0.1.0
+    version: 0.2.0
     alias: order-execution-service
     condition: order-execution-service.enabled
     repository: oci://registry-1.docker.io/franjofranjic

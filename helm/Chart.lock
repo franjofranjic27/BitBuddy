@@ -7,12 +7,12 @@ dependencies:
   version: 18.0.11
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
-  version: 0.1.0
+  version: 0.2.0
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
-  version: 0.1.0
+  version: 0.2.0
 - name: generic-chart
   repository: oci://registry-1.docker.io/franjofranjic
-  version: 0.1.0
-digest: sha256:67e7dc837a8d7a1f712a44065e5c081541b02dd5c698d21ff4a088f2141cacaa
-generated: "2025-10-12T22:10:47.415168+02:00"
+  version: 0.2.0
+digest: sha256:fee57ecaf39ce1e7390b1cb5384ef0b93c7cd9e65d4ff3a9798ae7f8cbb0ca8e
+generated: "2025-10-13T14:36:31.357303+02:00"
