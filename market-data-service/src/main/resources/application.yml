@@ -42,11 +42,12 @@ management:
       show-details: always
 
 mds:
+  provider: krakenMarketDataStreamingService
   crypto:
     pairs:
-      - BTC/USDT
-      - ETH/USDT
-      - ADA/USDT
+      - BTC/USD
+      - ETH/USD
+      - ADA/USD
 
 logging:
   level:

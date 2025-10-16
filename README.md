@@ -113,3 +113,10 @@ via: 1.1 3200e279ff99ad1800a0dd3b3c8e2d10.cloudfront.net (CloudFront)
 x-amz-cf-pop: IAD61-P2
 x-amz-cf-id: tlu0zK6dpGog-pwATI4ppDQMxPrCtj-taYkKYfgbf8kuu4bJzEFK2Q==
 
+so after testing via a websocket image on kuberntes
+kubectl run netshoot --rm -it --image=nicolaka/netshoot -- bash
+
+i checked that i can connect to kraken exchange via
+websocat wss://ws.kraken.com
+
+so there kraken will be the go to exchange for now

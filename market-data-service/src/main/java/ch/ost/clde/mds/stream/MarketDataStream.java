@@ -16,10 +16,12 @@ import java.util.List;
 public class MarketDataStream {
 
     private final CryptoPairPropteries pairPropteries;
-    private final MarketDataStreamingService streamingService;
+    private MarketDataStreamingService streamingService;
+    private final MarketDataStreamingServiceFactory factory;
 
     @PostConstruct
     public void startStreaming() {
+        this.streamingService = factory.getStreamingService();
         List<CurrencyPair> pairs = pairPropteries.getPairs().stream()
                 .map(s -> {
                     String[] parts = s.split("/");
