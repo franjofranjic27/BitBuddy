@@ -33,7 +33,7 @@ market-data-service:
       successThreshold: 1
 
 order-decision-service:
-  enabled: true
+  enabled: false
   global:
     appName: 'order-decision-service'
   deployment:
@@ -51,7 +51,7 @@ order-decision-service:
           name: bitbuddy-datasource-secret
 
 order-execution-service:
-  enabled: true
+  enabled: false
   global:
     appName: 'order-execution-service'
   deployment:
@@ -70,11 +70,11 @@ order-execution-service:
 
 datasource:
   username: bitbuddy
-  password: secret
-  url: jdbc:postgresql://bitbuddy-postgresql:5432/bitbuddy
+  password: secretsecret
+  url: jdbc:postgresql://bitbuddy.c72ugcukuhdk.us-east-1.rds.amazonaws.com:5432/bitbuddy
 
 postgresql:
-  enabled: true
+  enabled: false
   auth:
     postgresPassword: admin1234
     username: bitbuddy

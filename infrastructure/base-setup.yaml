@@ -211,6 +211,27 @@ Resources:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTableB
 
+  IsolatedRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: isolated-rt
+
+  # Associate isolated subnets
+  IsolatedSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref IsolatedSubnet1
+      RouteTableId: !Ref IsolatedRouteTable
+
+  IsolatedSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref IsolatedSubnet2
+      RouteTableId: !Ref IsolatedRouteTable
+
   ### Security Groups ###
   SGALB:
     Type: AWS::EC2::SecurityGroup
@@ -258,6 +279,7 @@ Resources:
       IpProtocol: -1
       SourceSecurityGroupId: !Ref SGALB
 
+  ## das sollte man wegnehmen ist nur für development
   SGRDSIngressFromEKS:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
@@ -265,7 +287,7 @@ Resources:
       IpProtocol: tcp
       FromPort: 5432
       ToPort: 5432
-      SourceSecurityGroupId: !Ref SGEKS
+      CidrIp: 0.0.0.0/0
 
   ### Application Load Balancer ###
   ALB:

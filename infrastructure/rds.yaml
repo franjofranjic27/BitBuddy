@@ -20,13 +20,13 @@ Resources:
     Properties:
       DBInstanceIdentifier: bitbuddy
       Engine: postgres
-      EngineVersion: '18.0'
+      EngineVersion: '16.3'
       DBName: bitbuddy
       MasterUsername: bitbuddy
-      MasterUserPassword: secret
+      MasterUserPassword: secretsecret # needs to be at least 8 chars
       AllocatedStorage: 20
       DBInstanceClass: db.t3.micro
-      PubliclyAccessible: true
+      PubliclyAccessible: false
       VPCSecurityGroups:
         - !ImportValue bitbuddy-rds-sg
       DBSubnetGroupName: !Ref DBSubnetGroup

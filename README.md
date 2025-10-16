@@ -95,3 +95,21 @@ helm uninstall bitbuddy -n bitbuddy-dev
 12. Create new queue
 13. Go to SNS
 
+aws cli authentication
+open ~/.aws/credentials
+copy the access key and secret key
+aws eks update-kubeconfig --region us-east-1 --name bitbuddy-cluster
+
+-> Market Data Service
+Wir können nicht binance verwenden, da er die anfrage von der us region blockt
+/ # curl -I https://api.binance.com/api/v3/exchangeInfo
+HTTP/2 451
+server: CloudFront
+date: Thu, 16 Oct 2025 12:15:07 GMT
+content-length: 224
+content-type: application/json
+x-cache: Error from cloudfront
+via: 1.1 3200e279ff99ad1800a0dd3b3c8e2d10.cloudfront.net (CloudFront)
+x-amz-cf-pop: IAD61-P2
+x-amz-cf-id: tlu0zK6dpGog-pwATI4ppDQMxPrCtj-taYkKYfgbf8kuu4bJzEFK2Q==
+
