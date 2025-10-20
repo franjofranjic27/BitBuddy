@@ -132,7 +132,7 @@ mvn -T 1C clean install
 ### 5.4 Service mit Profil
 
 ```bash
-cd trade-decision-service
+cd market-data-service
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
