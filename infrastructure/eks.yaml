@@ -13,7 +13,7 @@ Parameters:
     Type: String
     Description: ARN der LabEksClusterRole (aus IAM kopieren)
   NodeRoleArn:
-    Type: String
+    Type: AWS::IAM::Role,
     Description: ARN der LabEksNodeRole (aus IAM kopieren)
 
 Resources:

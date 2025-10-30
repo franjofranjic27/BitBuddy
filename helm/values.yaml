@@ -33,7 +33,7 @@ market-data-service:
       successThreshold: 1
 
 order-decision-service:
-  enabled: false
+  enabled: true
   global:
     appName: 'order-decision-service'
   deployment:
@@ -51,7 +51,7 @@ order-decision-service:
           name: bitbuddy-datasource-secret
 
 order-execution-service:
-  enabled: false
+  enabled: true
   global:
     appName: 'order-execution-service'
   deployment:

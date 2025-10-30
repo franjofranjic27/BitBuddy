@@ -423,5 +423,7 @@ docker exec -it kafka kafka-topics.sh --bootstrap-server kafka:9092 --list
 # Kubernetes (Minikube)
 minikube start && helm install bitbuddy helm -n bitbuddy-dev --create-namespace -f helm/values.yaml
 # AWS EKS Kubeconfig
-aws eks update-kubeconfig --region us-east-1 --name bitbuddy-cluster
+aws eks update-kubeconfig --region us-east-1 --name bitbuddy
+
+open ~/.aws/credentials
 ```
