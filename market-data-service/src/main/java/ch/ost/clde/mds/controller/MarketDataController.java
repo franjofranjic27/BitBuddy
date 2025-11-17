@@ -28,11 +28,6 @@ public class MarketDataController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/symbol/{symbol}")
-    public List<MarketDataEntity> getMarketDataBySymbol(@PathVariable String symbol) {
-        return marketDataRepository.findBySymbol(symbol);
-    }
-
     @GetMapping("/symbol")
     public List<MarketDataEntity> getMarketDataBySymbolParam(@RequestParam String symbol) {
         return marketDataRepository.findBySymbol(symbol);

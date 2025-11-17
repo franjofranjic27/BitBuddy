@@ -1,11 +1,11 @@
 import React from 'react';
-import type { MarketTick } from '../../types/domain';
+import type {MarketData} from '../../types/domain';
 
 interface MarketTableProps {
-    data: MarketTick[];
+    data: MarketData[];
 }
 
-export const MarketTable: React.FC<MarketTableProps> = ({ data }) => {
+export const MarketTable: React.FC<MarketTableProps> = ({data}) => {
     return (
         <section className="bb-section">
             <div className="bb-table-wrapper">
@@ -19,7 +19,6 @@ export const MarketTable: React.FC<MarketTableProps> = ({ data }) => {
                     <table className="bb-table">
                         <thead>
                         <tr>
-                            <th>Exchange</th>
                             <th>Symbol</th>
                             <th>Price</th>
                             <th>Volume</th>
@@ -29,10 +28,9 @@ export const MarketTable: React.FC<MarketTableProps> = ({ data }) => {
                         <tbody>
                         {data.map((tick) => (
                             <tr key={tick.id}>
-                                <td>{tick.exchange}</td>
                                 <td>{tick.symbol}</td>
                                 <td>{tick.price.toFixed(2)}</td>
-                                <td>{tick.volume}</td>
+                                <td>{tick.amount}</td>
                                 <td>{new Date(tick.timestamp).toLocaleString('de-CH')}</td>
                             </tr>
                         ))}

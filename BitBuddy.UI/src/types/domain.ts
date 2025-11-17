@@ -1,34 +1,31 @@
 export type Side = 'BUY' | 'SELL';
 
-export interface MarketTick {
+export interface MarketData {
     id: string;
-    exchange: string;
     symbol: string;
     price: number;
-    volume: number;
+    amount: number;
+    type: string;
     timestamp: string; // ISO String
 }
 
 export interface TradeDecision {
     id: string;
-    symbol: string;
-    side: Side;
-    size: number;
-    reason: string;
-    strategy: string;
+    base: string;
+    counter: string;
+    orderStyle: string;
+    orderType: string;
+    amount: number;
     createdAt: string;
-    status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
 }
 
 export interface OrderExecution {
     id: string;
-    decisionId: string;
-    symbol: string;
-    side: Side;
-    size: number;
-    price: number;
-    exchange: string;
-    status: 'NEW' | 'FILLED' | 'PARTIALLY_FILLED' | 'REJECTED';
+    base: string;
+    counter: string;
+    orderStyle: string;
+    orderType: string;
+    amount: number;
     createdAt: string;
 }
 

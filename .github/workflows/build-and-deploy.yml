@@ -11,6 +11,7 @@ on:
 
 jobs:
   build-test-docker:
+    name: build, test and push bitbuddy services image
     runs-on: ubuntu-latest
     strategy:
       matrix:

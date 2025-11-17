@@ -1,23 +1,23 @@
 import React from 'react';
-import type { TradeDecision } from '../../types/domain';
+import type {TradeDecision} from '../../types/domain';
 
 interface DecisionTableProps {
     data: TradeDecision[];
 }
 
-const statusClass = (status: TradeDecision['status']): string => {
-    switch (status) {
-        case 'ACCEPTED':
-            return 'bb-badge bb-badge--status bb-badge--status-accepted';
-        case 'PENDING':
-            return 'bb-badge bb-badge--status bb-badge--status-pending';
-        case 'REJECTED':
-        default:
-            return 'bb-badge bb-badge--status bb-badge--status-rejected';
-    }
-};
+// const statusClass = (status: TradeDecision['status']): string => {
+//     switch (status) {
+//         case 'ACCEPTED':
+//             return 'bb-badge bb-badge--status bb-badge--status-accepted';
+//         case 'PENDING':
+//             return 'bb-badge bb-badge--status bb-badge--status-pending';
+//         case 'REJECTED':
+//         default:
+//             return 'bb-badge bb-badge--status bb-badge--status-rejected';
+//     }
+// };
 
-export const DecisionTable: React.FC<DecisionTableProps> = ({ data }) => {
+export const DecisionTable: React.FC<DecisionTableProps> = ({data}) => {
     return (
         <section className="bb-section">
             <div className="bb-table-wrapper">
@@ -31,37 +31,37 @@ export const DecisionTable: React.FC<DecisionTableProps> = ({ data }) => {
                     <table className="bb-table">
                         <thead>
                         <tr>
-                            <th>Symbol</th>
-                            <th>Side</th>
-                            <th>Size</th>
-                            <th>Strategy</th>
-                            <th>Reason</th>
-                            <th>Status</th>
+                            <th>Base</th>
+                            <th>Counter</th>
+                            <th>Amount</th>
+                            <th>Style</th>
+                            <th>Type</th>
                             <th>Created</th>
                         </tr>
                         </thead>
                         <tbody>
                         {data.map((d) => (
                             <tr key={d.id}>
-                                <td>{d.symbol}</td>
-                                <td>
-                    <span
-                        className={
-                            'bb-badge ' +
-                            (d.side === 'BUY'
-                                ? 'bb-badge--buy'
-                                : 'bb-badge--sell')
-                        }
-                    >
-                      {d.side}
-                    </span>
-                                </td>
-                                <td>{d.size}</td>
-                                <td>{d.strategy}</td>
-                                <td>{d.reason}</td>
-                                <td>
-                                    <span className={statusClass(d.status)}>{d.status}</span>
-                                </td>
+                                <td>{d.base}</td>
+                                <td>{d.counter}</td>
+                                {/*<td>*/}
+                                {/*<span*/}
+                                {/*    className={*/}
+                                {/*        'bb-badge ' +*/}
+                                {/*        (d.side === 'BUY'*/}
+                                {/*            ? 'bb-badge--buy'*/}
+                                {/*            : 'bb-badge--sell')*/}
+                                {/*    }*/}
+                                {/*>*/}
+                                {/*  {d.side}*/}
+                                {/*</span>*/}
+                                {/*</td>*/}
+                                <td>{d.amount}</td>
+                                <td>{d.orderStyle}</td>
+                                <td>{d.orderType}</td>
+                                {/*<td>*/}
+                                {/*    <span className={statusClass(d.status)}>{d.status}</span>*/}
+                                {/*</td>*/}
                                 <td>{new Date(d.createdAt).toLocaleString('de-CH')}</td>
                             </tr>
                         ))}

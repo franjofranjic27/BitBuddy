@@ -1,30 +1,22 @@
 import React from 'react';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    Tooltip,
-    CartesianGrid,
-    ResponsiveContainer,
-} from 'recharts';
-import type { PricePoint } from '../../types/domain';
+import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis,} from 'recharts';
+import type {PricePoint} from '../../types/domain';
 
 interface PriceChartProps {
     data: PricePoint[];
     symbol: string;
 }
 
-export const PriceChart: React.FC<PriceChartProps> = ({ data, symbol }) => {
+export const PriceChart: React.FC<PriceChartProps> = ({data, symbol}) => {
     return (
         <div className="bb-chart-card">
-            <h3 className="bb-table-title" style={{ marginBottom: 6 }}>
+            <h3 className="bb-table-title" style={{marginBottom: 6}}>
                 {symbol} · Price (mock)
             </h3>
-            <div style={{ width: '100%', height: 220 }}>
+            <div style={{width: '100%', height: 220}}>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.35)" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.35)"/>
                         <XAxis
                             dataKey="timestamp"
                             tickFormatter={(value) =>
@@ -33,13 +25,13 @@ export const PriceChart: React.FC<PriceChartProps> = ({ data, symbol }) => {
                                     minute: '2-digit',
                                 })
                             }
-                            tick={{ fill: '#9ca3af', fontSize: 11 }}
+                            tick={{fill: '#9ca3af', fontSize: 11}}
                             minTickGap={20}
                         />
                         <YAxis
                             dataKey="price"
                             tickFormatter={(v) => v.toFixed(0)}
-                            tick={{ fill: '#9ca3af', fontSize: 11 }}
+                            tick={{fill: '#9ca3af', fontSize: 11}}
                         />
                         <Tooltip
                             contentStyle={{
@@ -59,7 +51,7 @@ export const PriceChart: React.FC<PriceChartProps> = ({ data, symbol }) => {
                             stroke="#4f46e5"
                             strokeWidth={2}
                             dot={false}
-                            activeDot={{ r: 4 }}
+                            activeDot={{r: 4}}
                         />
                     </LineChart>
                 </ResponsiveContainer>

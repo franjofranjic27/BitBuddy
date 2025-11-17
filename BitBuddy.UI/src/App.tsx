@@ -7,29 +7,22 @@ import {MarketTable} from './components/market/MarketTable';
 import {DecisionTable} from './components/decisions/DecisionTable';
 import {OrdersTable} from './components/orders/OrdersTable';
 import {PriceChart} from './components/market/PriceChart';
-import type {MarketTick, OrderExecution, PricePoint, TradeDecision,} from './types/domain';
+import type {MarketData, OrderExecution, TradeDecision,} from './types/domain';
 
 const App: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabKey>('overview');
-    const [marketData, setMarketData] = useState<MarketTick[]>([]);
+    const [marketData, setMarketData] = useState<MarketData[]>([]);
     const [decisions, setDecisions] = useState<TradeDecision[]>([]);
     const [orders, setOrders] = useState<OrderExecution[]>([]);
-    const [btcHistory, setBtcHistory] = useState<PricePoint[]>([]);
-    const [ethHistory, setEthHistory] = useState<PricePoint[]>([]);
+    const [btcHistory, setBtcHistory] = useState<MarketData[]>([]);
+    const [ethHistory, setEthHistory] = useState<MarketData[]>([]);
 
     useEffect(() => {
-        Api.getMarketTicks().then(setMarketData);
-        Api.getTradeDecisions().then(data => {
-            console.log("Decision:" + data);
-            return data;
-        })
-            .then(setDecisions);
-        Api.getOrderExecutions().then(data => {
-            console.log(data);
-            return data;
-        }).then(setOrders);
-        Api.getPriceHistory('BTC/EUR').then(setBtcHistory);
-        Api.getPriceHistory('ETH/EUR').then(setEthHistory);
+        Api.getMarketData().then(setMarketData);
+        Api.getTradeDecisions().then(setDecisions);
+        Api.getOrderExecutions().then(setOrders);
+        Api.getPriceHistory('BTC/USD').then(setBtcHistory);
+        Api.getPriceHistory('ETH/USD').then(setEthHistory);
     }, []);
 
     const filledOrders = orders;

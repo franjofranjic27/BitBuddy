@@ -1,8 +1,7 @@
-import type {MarketTick, OrderExecution, PricePoint, TradeDecision,} from '../types/domain';
-import {btcEurHistory, ethEurHistory,} from '../mock/mockData';
+import type {MarketData, OrderExecution, TradeDecision,} from '../types/domain';
 
 export const Api = {
-    async getMarketTicks(): Promise<MarketTick[]> {
+    async getMarketData(): Promise<MarketData[]> {
         try {
             const response = await fetch('http://localhost:8080/api/market-data');
 
@@ -10,10 +9,8 @@ export const Api = {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data: MarketTick[] = await response.json();
-            // console.log('Fetched market ticks:', data);
+            const data: MarketData[] = await response.json();
 
-            // return Promise.resolve(mockMarketTicks);
             return data;
         } catch (error) {
             console.error('Error fetching market ticks:', error);
@@ -30,9 +27,6 @@ export const Api = {
             }
 
             const data: TradeDecision[] = await response.json();
-            // console.log('Fetched trades:', data);
-
-            // return Promise.resolve(mockTradeDecisions);
 
             return data;
         } catch (error) {
@@ -50,9 +44,6 @@ export const Api = {
             }
 
             const data: OrderExecution[] = await response.json();
-            // console.log('Fetched trades:', data);
-
-            // return Promise.resolve(mockOrderExecutions);
 
             return data;
         } catch (error) {
@@ -61,12 +52,20 @@ export const Api = {
         }
     },
 
-    async getPriceHistory(symbol: string): Promise<PricePoint[]> {
-        const map: Record<string, PricePoint[]> = {
-            'BTC/EUR': btcEurHistory,
-            'ETH/EUR': ethEurHistory,
-        };
+    async getPriceHistory(symbol: string): Promise<MarketData[]> {
+        try {
+            const response = await fetch('http://localhost:8080/api/market-data/symbol?symbol=' + symbol);
 
-        return Promise.resolve(map[symbol] ?? []);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data: MarketData[] = await response.json();
+
+            return data;
+        } catch (error) {
+            console.error('Error fetching market ticks:', error);
+            throw error;
+        }
     },
 };
