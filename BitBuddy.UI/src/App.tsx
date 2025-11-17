@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { PageLayout } from './components/layout/PageLayout';
-import { NavBar } from './components/layout/NavBar';
-import type { TabKey } from './components/layout/NavBar';
-import { Api } from './services/api';
-import { MarketTable } from './components/market/MarketTable';
-import { DecisionTable } from './components/decisions/DecisionTable';
-import { OrdersTable } from './components/orders/OrdersTable';
-import { PriceChart } from './components/market/PriceChart';
-import type {
-    MarketTick,
-    TradeDecision,
-    OrderExecution,
-    PricePoint,
-} from './types/domain';
+import React, {useEffect, useState} from 'react';
+import {PageLayout} from './components/layout/PageLayout';
+import type {TabKey} from './components/layout/NavBar';
+import {NavBar} from './components/layout/NavBar';
+import {Api} from './services/api';
+import {MarketTable} from './components/market/MarketTable';
+import {DecisionTable} from './components/decisions/DecisionTable';
+import {OrdersTable} from './components/orders/OrdersTable';
+import {PriceChart} from './components/market/PriceChart';
+import type {MarketTick, OrderExecution, PricePoint, TradeDecision,} from './types/domain';
 
 const App: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabKey>('overview');
@@ -24,13 +19,21 @@ const App: React.FC = () => {
 
     useEffect(() => {
         Api.getMarketTicks().then(setMarketData);
-        Api.getTradeDecisions().then(setDecisions);
-        Api.getOrderExecutions().then(setOrders);
+        Api.getTradeDecisions().then(data => {
+            console.log("Decision:" + data);
+            return data;
+        })
+            .then(setDecisions);
+        Api.getOrderExecutions().then(data => {
+            console.log(data);
+            return data;
+        }).then(setOrders);
         Api.getPriceHistory('BTC/EUR').then(setBtcHistory);
         Api.getPriceHistory('ETH/EUR').then(setEthHistory);
     }, []);
 
-    const filledOrders = orders.filter((o) => o.status === 'FILLED');
+    const filledOrders = orders;
+    // const filledOrders = orders.filter((o) => o.status === 'FILLED');
 
     const renderContent = () => {
         if (activeTab === 'overview') {
@@ -59,7 +62,7 @@ const App: React.FC = () => {
 
                     <section className="bb-section">
                         <h2 className="bb-section-title">Recent Decisions</h2>
-                        <DecisionTable data={decisions.slice(0, 5)} />
+                        <DecisionTable data={decisions.slice(0, 5)}/>
                     </section>
                 </>
             );
@@ -71,25 +74,25 @@ const App: React.FC = () => {
                     <section className="bb-section">
                         <h2 className="bb-section-title">Price Action</h2>
                         <div className="bb-chart-grid">
-                            <PriceChart data={btcHistory} symbol="BTC/EUR" />
-                            <PriceChart data={ethHistory} symbol="ETH/EUR" />
+                            <PriceChart data={btcHistory} symbol="BTC/EUR"/>
+                            <PriceChart data={ethHistory} symbol="ETH/EUR"/>
                         </div>
                     </section>
-                    <MarketTable data={marketData} />
+                    <MarketTable data={marketData}/>
                 </>
             );
         }
 
         if (activeTab === 'decisions') {
-            return <DecisionTable data={decisions} />;
+            return <DecisionTable data={decisions}/>;
         }
 
-        return <OrdersTable data={orders} />;
+        return <OrdersTable data={orders}/>;
     };
 
     return (
         <PageLayout>
-            <NavBar activeTab={activeTab} onTabChange={setActiveTab} />
+            <NavBar activeTab={activeTab} onTabChange={setActiveTab}/>
             {renderContent()}
         </PageLayout>
     );

@@ -11,7 +11,7 @@ export const Api = {
             }
 
             const data: MarketTick[] = await response.json();
-            console.log('Fetched market ticks:', data);
+            // console.log('Fetched market ticks:', data);
 
             // return Promise.resolve(mockMarketTicks);
             return data;
@@ -30,7 +30,7 @@ export const Api = {
             }
 
             const data: TradeDecision[] = await response.json();
-            console.log('Fetched trades:', data);
+            // console.log('Fetched trades:', data);
 
             // return Promise.resolve(mockTradeDecisions);
 
@@ -50,7 +50,7 @@ export const Api = {
             }
 
             const data: OrderExecution[] = await response.json();
-            console.log('Fetched trades:', data);
+            // console.log('Fetched trades:', data);
 
             // return Promise.resolve(mockOrderExecutions);
 
