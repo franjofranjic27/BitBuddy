@@ -25,3 +25,8 @@ dependencies:
     alias: order-execution-service
     condition: order-execution-service.enabled
     repository: oci://registry-1.docker.io/franjofranjic
+  - name: generic-chart
+    version: 0.2.1
+    alias: frontend
+    condition: frontend.enabled
+    repository: oci://registry-1.docker.io/franjofranjic

@@ -74,6 +74,54 @@ order-execution-service:
       - secretRef:
           name: bitbuddy-datasource-secret
 
+frontend:
+  enabled: true
+  api:
+    marketDataUrl: http://market-data-service:8080/api/market-data
+    tradeDecisionsUrl: http://trade-decision-service:8080/api/orders
+    orderExecutionsUrl: http://order-execution-service:8080/api/trades
+  global:
+    appName: 'bitbuddy-frontend'
+  deployment:
+    image:
+      repository: docker.io/franjofranjic
+      tag: latest
+      pullPolicy: Always
+    envFrom:
+      - configMapRef:
+          name: bitbuddy-frontend-env
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 3000
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 3000
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+    startupProbe:
+      httpGet:
+        path: /
+        port: 3000
+      failureThreshold: 12
+      periodSeconds: 10
+  service:
+    enabled: false
+    ports:
+      - name: http
+        port: 8080
+        targetPort: 3000
+        protocol: TCP
+
 datasource:
   username: bitbuddy
   password: secretsecret

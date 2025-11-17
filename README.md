@@ -423,7 +423,24 @@ docker exec -it kafka kafka-topics.sh --bootstrap-server kafka:9092 --list
 # Kubernetes (Minikube)
 minikube start && helm install bitbuddy helm -n bitbuddy-dev --create-namespace -f helm/values.yaml
 # AWS EKS Kubeconfig
-aws eks update-kubeconfig --region us-east-1 --name bitbuddy
-
 open ~/.aws/credentials
+aws eks update-kubeconfig --region us-east-1 --name bitbuddy
+kubectl create namespace bitbuddy
+kubectl config set-context --current --namespace=bitbuddy
+
+
+kubectl port-forward pod/XXX 5005:5005
+
+ helm repo add eks https://aws.github.io/eks-charts                                                                    ✔  bitbuddy/bitbuddy 󱃾  21:30:22 
+
+helm repo update
+
+
+helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName=bitbuddy \
+  --set region=us-east-1 \
+  --set vpcId=vpc-0db7329069f03664d \
+  --set serviceAccount.create=true \
+  --set serviceAccount.name=aws-load-balancer-controller
 ```

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bitbuddy-frontend-env
+data:
+  VITE_MARKET_DATA_API_URL: {{ .Values.frontend.api.marketDataUrl | quote }}
+  VITE_TRADE_DECISIONS_API_URL: {{ .Values.frontend.api.tradeDecisionsUrl | quote }}
+  VITE_ORDER_EXECUTIONS_API_URL: {{ .Values.frontend.api.orderExecutionsUrl | quote }}
