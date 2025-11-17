@@ -443,4 +443,7 @@ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-contro
   --set vpcId=vpc-0db7329069f03664d \
   --set serviceAccount.create=true \
   --set serviceAccount.name=aws-load-balancer-controller
+  
+kubectl exec -it bitbuddy-frontend-56b4d5b56b-6rbxt -n bitbuddy -- sh
+
 ```
