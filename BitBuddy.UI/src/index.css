@@ -1,0 +1,373 @@
+:root {
+    --bb-bg: #0b1120;
+    --bb-bg-soft: rgba(15, 23, 42, 0.85);
+    --bb-card: #ffffff;
+    --bb-border-subtle: rgba(148, 163, 184, 0.3);
+    --bb-text: #0f172a;
+    --bb-text-soft: #64748b;
+    --bb-accent: #6366f1;
+    --bb-accent-soft: rgba(99, 102, 241, 0.1);
+    --bb-radius-lg: 16px;
+    --bb-radius-md: 10px;
+    --bb-shadow-card: 0 18px 45px rgba(15, 23, 42, 0.18);
+    --bb-shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.15);
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--bb-text);
+    background-color: var(--bb-bg);
+}
+
+/* Layout reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+            radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 50%),
+            radial-gradient(circle at 100% 0%, rgba(129, 140, 248, 0.3), transparent 55%),
+            radial-gradient(circle at 50% 100%, rgba(45, 212, 191, 0.18), transparent 55%),
+            var(--bb-bg-soft);
+}
+
+#root {
+    min-height: 100vh;
+}
+
+/* Buttons & links baseline */
+button {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* --- BitBuddy Layout --- */
+
+.bb-root {
+    min-height: 100vh;
+    padding: 20px 24px 28px;
+    display: flex;
+    justify-content: center;
+}
+
+.bb-shell {
+    width: 100%;
+    max-width: 1220px;
+    background: linear-gradient(
+            145deg,
+            rgba(15, 23, 42, 0.9),
+            rgba(15, 23, 42, 0.96)
+    ),
+    var(--bb-bg-soft);
+    border-radius: 24px;
+    box-shadow: var(--bb-shadow-card);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    backdrop-filter: blur(26px);
+}
+
+.bb-header {
+    padding: 18px 24px 10px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.bb-header-title {
+    margin: 0;
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #e5e7eb;
+}
+
+.bb-header-subtitle {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+.bb-header-tag {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.18);
+    color: #bbf7d0;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.bb-main {
+    flex: 1;
+    padding: 10px 18px 18px;
+    background: radial-gradient(
+            circle at 0% 0%,
+            rgba(37, 99, 235, 0.35),
+            transparent 55%
+    )
+    0 0 / 60% 60% no-repeat,
+    radial-gradient(
+            circle at 100% 100%,
+            rgba(6, 182, 212, 0.3),
+            transparent 55%
+    )
+    100% 100% / 55% 55% no-repeat,
+    rgba(15, 23, 42, 0.95);
+    color: #e5e7eb;
+    overflow: auto;
+}
+
+/* --- Navigation --- */
+
+.bb-nav {
+    display: flex;
+    gap: 10px;
+    padding: 6px;
+    margin-bottom: 14px;
+    background: rgba(15, 23, 42, 0.85);
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.65);
+}
+
+.bb-nav-btn {
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+            background 0.15s ease,
+            color 0.15s ease,
+            transform 0.08s ease;
+}
+
+.bb-nav-btn:hover {
+    background: rgba(148, 163, 184, 0.12);
+    color: #e5e7eb;
+}
+
+.bb-nav-btn--active {
+    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    color: white;
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
+    transform: translateY(-1px);
+}
+
+/* --- Sections & cards --- */
+
+.bb-section {
+    margin-bottom: 20px;
+}
+
+.bb-section-title {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.bb-grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.bb-card {
+    background: radial-gradient(circle at 0 0, #1d283a, #020617);
+    border-radius: var(--bb-radius-lg);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    padding: 14px 14px 12px;
+    box-shadow: var(--bb-shadow-soft);
+}
+
+.bb-card-title {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.bb-card-kpi {
+    margin: 6px 0 0;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+.bb-card-note {
+    margin: 4px 0 0;
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* --- Table wrapper --- */
+
+.bb-table-wrapper {
+    background: rgba(15, 23, 42, 0.9);
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    box-shadow: var(--bb-shadow-soft);
+    padding: 10px 12px;
+    overflow: hidden;
+}
+
+.bb-table-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.bb-table-title {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9ca3af;
+}
+
+.bb-table-subtitle {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.bb-table-scroll {
+    max-height: 260px;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(31, 41, 55, 0.9);
+}
+
+/* --- Table --- */
+
+.bb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.bb-table thead {
+    background: linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.98),
+            rgba(15, 23, 42, 0.92)
+    );
+}
+
+.bb-table th,
+.bb-table td {
+    padding: 7px 10px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.bb-table th {
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+}
+
+.bb-table tbody tr:nth-child(odd) {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+.bb-table tbody tr:nth-child(even) {
+    background: rgba(17, 24, 39, 0.96);
+}
+
+.bb-table tbody tr:hover {
+    background: rgba(30, 64, 175, 0.45);
+}
+
+/* --- Badges --- */
+
+.bb-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.bb-badge--buy {
+    background: rgba(34, 197, 94, 0.12);
+    color: #bbf7d0;
+    border: 1px solid rgba(34, 197, 94, 0.55);
+}
+
+.bb-badge--sell {
+    background: rgba(239, 68, 68, 0.12);
+    color: #fecaca;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.bb-badge--status {
+    background: rgba(148, 163, 184, 0.15);
+    color: #e5e7eb;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+.bb-badge--status-accepted {
+    background: rgba(34, 197, 94, 0.1);
+    color: #bbf7d0;
+    border-color: rgba(34, 197, 94, 0.7);
+}
+
+.bb-badge--status-pending {
+    background: rgba(234, 179, 8, 0.12);
+    color: #fef9c3;
+    border-color: rgba(234, 179, 8, 0.6);
+}
+
+.bb-badge--status-rejected {
+    background: rgba(239, 68, 68, 0.18);
+    color: #fecaca;
+    border-color: rgba(239, 68, 68, 0.7);
+}
+
+/* Chart container */
+
+.bb-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.bb-chart-card {
+    background: radial-gradient(circle at 0 0, #1f2937, #020617);
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    padding: 10px 12px;
+    box-shadow: var(--bb-shadow-soft);
+}
