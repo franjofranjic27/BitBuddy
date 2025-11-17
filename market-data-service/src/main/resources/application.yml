@@ -52,3 +52,6 @@ mds:
 logging:
   level:
     info.bitrich.xchangestream.bitstamp.v2.BitstampStreamingService: ERROR
+
+cors:
+  allowed-origins: "http://localhost:5173,http://localhost:3000,https://yourdomain.com"
