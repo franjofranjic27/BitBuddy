@@ -1,9 +1,14 @@
 import type {MarketData, OrderExecution, TradeDecision,} from '../types/domain';
 
+const MARKET_DATA_API_URL = import.meta.env.VITE_MARKET_DATA_API_URL;
+const TRADE_DECISIONS_API_URL = import.meta.env.VITE_TRADE_DECISIONS_API_URL;
+const ORDER_EXECUTIONS_API_URL = import.meta.env.VITE_ORDER_EXECUTIONS_API_URL;
+
+
 export const Api = {
     async getMarketData(): Promise<MarketData[]> {
         try {
-            const response = await fetch('http://localhost:8080/api/market-data');
+            const response = await fetch(`${MARKET_DATA_API_URL}/api/market-data`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -20,7 +25,7 @@ export const Api = {
 
     async getTradeDecisions(): Promise<TradeDecision[]> {
         try {
-            const response = await fetch('http://localhost:8081/api/orders');
+            const response = await fetch(`${TRADE_DECISIONS_API_URL}/api/orders`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,7 +42,7 @@ export const Api = {
 
     async getOrderExecutions(): Promise<OrderExecution[]> {
         try {
-            const response = await fetch('http://localhost:8082/api/trades');
+            const response = await fetch(`${ORDER_EXECUTIONS_API_URL}/api/trades`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -54,7 +59,7 @@ export const Api = {
 
     async getPriceHistory(symbol: string): Promise<MarketData[]> {
         try {
-            const response = await fetch('http://localhost:8080/api/market-data/symbol?symbol=' + symbol);
+            const response = await fetch(`${MARKET_DATA_API_URL}/api/market-data/symbol?symbol=${symbol}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
