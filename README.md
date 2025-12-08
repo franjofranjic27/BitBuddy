@@ -447,3 +447,5 @@ helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-contro
 kubectl exec -it bitbuddy-frontend-56b4d5b56b-6rbxt -n bitbuddy -- sh
 
 ```
+
+erwähnen wie man richtige Börse anbindet
