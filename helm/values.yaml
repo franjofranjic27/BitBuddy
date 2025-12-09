@@ -4,7 +4,6 @@ market-data-service:
   global:
     appName: 'market-data-service'
   deployment:
-    replicaCount: "2"
     image:
       repository: docker.io/franjofranjic
       tag: latest

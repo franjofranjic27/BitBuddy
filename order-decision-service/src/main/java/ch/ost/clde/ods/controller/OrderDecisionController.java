@@ -30,10 +30,5 @@ public class OrderDecisionController {
         return marketData.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-//    @GetMapping("/latest")
-//    public List<OrderDecisionEntity> getLatestMarketData(@RequestParam(defaultValue = "10") int limit) {
-//        return orderDecisionRepository.findTopNByOrderByTimestampDesc(limit);
-//    }
 }
 
