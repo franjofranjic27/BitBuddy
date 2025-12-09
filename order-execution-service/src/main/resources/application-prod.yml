@@ -1,0 +1,5 @@
+kucoin:
+  api:
+    key: ${KUCOIN_API_KEY:changeit}
+    secret: ${KUCOIN_API_SECRET:changeit}
+    password: ${KUCOIN_PASSPHRASE:changeit}

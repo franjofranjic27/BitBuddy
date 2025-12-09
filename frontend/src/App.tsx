@@ -4,22 +4,19 @@ import type {TabKey} from './components/layout/NavBar';
 import {NavBar} from './components/layout/NavBar';
 import {Api} from './services/api';
 import {MarketTable} from './components/market/MarketTable';
-import {DecisionTable} from './components/decisions/DecisionTable';
 import {OrdersTable} from './components/orders/OrdersTable';
 import {PriceChart} from './components/market/PriceChart';
-import type {MarketData, OrderExecution, TradeDecision,} from './types/domain';
+import type {MarketData, OrderExecution} from './types/domain';
 
 const App: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabKey>('overview');
     const [marketData, setMarketData] = useState<MarketData[]>([]);
-    const [decisions, setDecisions] = useState<TradeDecision[]>([]);
     const [orders, setOrders] = useState<OrderExecution[]>([]);
     const [btcHistory, setBtcHistory] = useState<MarketData[]>([]);
     const [ethHistory, setEthHistory] = useState<MarketData[]>([]);
 
     useEffect(() => {
         Api.getMarketData().then(setMarketData);
-        Api.getTradeDecisions().then(setDecisions);
         Api.getOrderExecutions().then(setOrders);
         Api.getPriceHistory('BTC/USD').then(setBtcHistory);
         Api.getPriceHistory('ETH/USD').then(setEthHistory);
@@ -36,14 +33,9 @@ const App: React.FC = () => {
                         <h2 className="bb-section-title">System Overview</h2>
                         <div className="bb-grid-cards">
                             <article className="bb-card">
-                                <h3 className="bb-card-title">Market ticks (snapshot)</h3>
+                                <h3 className="bb-card-title">Market ticks</h3>
                                 <p className="bb-card-kpi">{marketData.length}</p>
                                 <p className="bb-card-note">From Market Data Service</p>
-                            </article>
-                            <article className="bb-card">
-                                <h3 className="bb-card-title">Decisions total</h3>
-                                <p className="bb-card-kpi">{decisions.length}</p>
-                                <p className="bb-card-note">Produced strategies & rules</p>
                             </article>
                             <article className="bb-card">
                                 <h3 className="bb-card-title">Filled orders</h3>
@@ -54,8 +46,8 @@ const App: React.FC = () => {
                     </section>
 
                     <section className="bb-section">
-                        <h2 className="bb-section-title">Recent Decisions</h2>
-                        <DecisionTable data={decisions.slice(0, 5)}/>
+                        <h2 className="bb-section-title">Recent Orders</h2>
+                        <OrdersTable data={orders.slice(0, 5)}/>
                     </section>
                 </>
             );
@@ -74,10 +66,6 @@ const App: React.FC = () => {
                     <MarketTable data={marketData}/>
                 </>
             );
-        }
-
-        if (activeTab === 'decisions') {
-            return <DecisionTable data={decisions}/>;
         }
 
         return <OrdersTable data={orders}/>;

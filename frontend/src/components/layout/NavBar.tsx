@@ -7,12 +7,11 @@ interface NavBarProps {
     onTabChange: (tab: TabKey) => void;
 }
 
-export const NavBar: React.FC<NavBarProps> = ({ activeTab, onTabChange }) => {
+export const NavBar: React.FC<NavBarProps> = ({activeTab, onTabChange}) => {
     const tabs: { key: TabKey; label: string }[] = [
-        { key: 'overview', label: 'Overview' },
-        { key: 'market', label: 'Market Data' },
-        { key: 'decisions', label: 'Trade Decisions' },
-        { key: 'orders', label: 'Order Executions' },
+        {key: 'overview', label: 'Overview'},
+        {key: 'market', label: 'Market Data'},
+        {key: 'orders', label: 'Order Executions'},
     ];
 
     return (

@@ -4,7 +4,7 @@ interface PageLayoutProps {
     children: React.ReactNode;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
+export const PageLayout: React.FC<PageLayoutProps> = ({children}) => {
     return (
         <div className="bb-root">
             <div className="bb-shell">
@@ -12,10 +12,10 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
                     <div>
                         <h1 className="bb-header-title">BitBuddy · Crypto Execution Stack</h1>
                         <p className="bb-header-subtitle">
-                            Modular Trading Bot · Market Data · Decisions · Orders
+                            Modular Trading Bot · Market Data · Orders
                         </p>
                     </div>
-                    <div className="bb-header-tag">Demo UI · Mocked Data</div>
+                    <div className="bb-header-tag">V1.0.0</div>
                 </header>
                 <main className="bb-main">{children}</main>
             </div>
