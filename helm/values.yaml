@@ -77,9 +77,9 @@ order-execution-service:
 frontend:
   enabled: true
   api:
-    marketDataUrl: http://market-data-service:8080/api/market-data
-    tradeDecisionsUrl: http://trade-decision-service:8080/api/orders
-    orderExecutionsUrl: http://order-execution-service:8080/api/trades
+    marketDataUrl: http://market-data-service:8080
+    tradeDecisionsUrl: http://trade-decision-service:8080
+    orderExecutionsUrl: http://order-execution-service:8080
   global:
     appName: 'bitbuddy-frontend'
   deployment:
