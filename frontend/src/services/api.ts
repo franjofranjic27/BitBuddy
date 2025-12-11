@@ -1,8 +1,18 @@
 import type {MarketData, OrderExecution, TradeDecision,} from '../types/domain';
 
-const MARKET_DATA_API_URL = import.meta.env.MARKET_DATA_API_URL;
-const TRADE_DECISIONS_API_URL = import.meta.env.TRADE_DECISIONS_API_URL;
-const ORDER_EXECUTIONS_API_URL = import.meta.env.ORDER_EXECUTIONS_API_URL;
+declare global {
+    interface Window {
+        ENV?: {
+            MARKET_DATA_API_URL: string;
+            TRADE_DECISIONS_API_URL: string;
+            ORDER_EXECUTIONS_API_URL: string;
+        };
+    }
+}
+
+const MARKET_DATA_API_URL = window.ENV?.MARKET_DATA_API_URL || import.meta.env.MARKET_DATA_API_URL;
+const TRADE_DECISIONS_API_URL = window.ENV?.TRADE_DECISIONS_API_URL || import.meta.env.TRADE_DECISIONS_API_URL;
+const ORDER_EXECUTIONS_API_URL = window.ENV?.ORDER_EXECUTIONS_API_URL || import.meta.env.ORDER_EXECUTIONS_API_URL;
 
 
 export const Api = {
