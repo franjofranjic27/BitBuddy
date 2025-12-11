@@ -1,8 +1,8 @@
 import type {MarketData, OrderExecution, TradeDecision,} from '../types/domain';
 
-const MARKET_DATA_API_URL = import.meta.env.VITE_MARKET_DATA_API_URL;
-const TRADE_DECISIONS_API_URL = import.meta.env.VITE_TRADE_DECISIONS_API_URL;
-const ORDER_EXECUTIONS_API_URL = import.meta.env.VITE_ORDER_EXECUTIONS_API_URL;
+const MARKET_DATA_API_URL = import.meta.env.MARKET_DATA_API_URL;
+const TRADE_DECISIONS_API_URL = import.meta.env.TRADE_DECISIONS_API_URL;
+const ORDER_EXECUTIONS_API_URL = import.meta.env.ORDER_EXECUTIONS_API_URL;
 
 
 export const Api = {
