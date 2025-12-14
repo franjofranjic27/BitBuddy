@@ -15,14 +15,14 @@ spec:
                 name: market-data-service
                 port:
                   number: 8080
-          - path: /api/trade-decisions
+          - path: /api/order-decision
             pathType: Prefix
             backend:
               service:
                 name: order-decision-service
                 port:
                   number: 8080
-          - path: /api/order-executions
+          - path: /api/order-execution
             pathType: Prefix
             backend:
               service:

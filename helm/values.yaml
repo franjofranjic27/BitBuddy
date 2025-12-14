@@ -76,10 +76,6 @@ order-execution-service:
 
 frontend:
   enabled: true
-  api:
-    marketDataUrl: /leckeier
-    tradeDecisionsUrl: /leckzwei
-    orderExecutionsUrl: /leckdrei
   global:
     appName: 'bitbuddy-frontend'
   deployment:
@@ -115,7 +111,6 @@ frontend:
       failureThreshold: 12
       periodSeconds: 10
   service:
-    enabled: false
     ports:
       - name: http
         port: 8080
@@ -125,13 +120,7 @@ frontend:
 datasource:
   username: bitbuddy
   password: secret
-  url: jdbc:postgresql://bitbuddy-postgresql:5432/bitbuddy
-  #  url: jdbc:postgresql://bitbuddy.c72ugcukuhdk.us-east-1.rds.amazonaws.com:5432/bitbuddy
+  url: jdbc:postgresql://bitbuddy.c72ugcukuhdk.us-east-1.rds.amazonaws.com:5432/bitbuddy
 
 postgresql:
-  enabled: true
-  auth:
-    postgresPassword: admin1234
-    username: bitbuddy
-    password: secret
-    database: bitbuddy
+  enabled: false

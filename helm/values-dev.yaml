@@ -1,0 +1,12 @@
+datasource:
+  username: bitbuddy
+  password: secret
+  url: jdbc:postgresql://bitbuddy-postgresql:5432/bitbuddy
+
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: admin1234
+    username: bitbuddy
+    password: secret
+    database: bitbuddy

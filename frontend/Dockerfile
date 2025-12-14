@@ -18,8 +18,8 @@ COPY --chmod=755 <<'EOF' /app/entrypoint.sh
 cat > /app/dist/env-config.js <<EOL
 window.ENV = {
   MARKET_DATA_API_URL: "/api/market-data",
-  TRADE_DECISIONS_API_URL: "/api/trade-decisions",
-  ORDER_EXECUTIONS_API_URL: "/api/order-executions"
+  TRADE_DECISIONS_API_URL: "/api/order-decision",
+  ORDER_EXECUTIONS_API_URL: "/api/order-execution"
 };
 EOL
 
