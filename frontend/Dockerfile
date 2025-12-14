@@ -17,9 +17,9 @@ COPY --chmod=755 <<'EOF' /app/entrypoint.sh
 # Generiere env-config.js mit tatsächlichen Umgebungsvariablen
 cat > /app/dist/env-config.js <<EOL
 window.ENV = {
-  MARKET_DATA_API_URL: "${VITE_MARKET_DATA_API_URL}",
-  TRADE_DECISIONS_API_URL: "${VITE_TRADE_DECISIONS_API_URL}",
-  ORDER_EXECUTIONS_API_URL: "${VITE_ORDER_EXECUTIONS_API_URL}"
+  MARKET_DATA_API_URL: "/api/market-data",
+  TRADE_DECISIONS_API_URL: "/api/trade-decisions",
+  ORDER_EXECUTIONS_API_URL: "/api/order-executions"
 };
 EOL
 

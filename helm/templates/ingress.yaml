@@ -1,0 +1,38 @@
+# helm/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bitbuddy-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /api/market-data
+            pathType: Prefix
+            backend:
+              service:
+                name: market-data-service
+                port:
+                  number: 8080
+          - path: /api/trade-decisions
+            pathType: Prefix
+            backend:
+              service:
+                name: order-decision-service
+                port:
+                  number: 8080
+          - path: /api/order-executions
+            pathType: Prefix
+            backend:
+              service:
+                name: order-execution-service
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bitbuddy-frontend
+                port:
+                  number: 3000

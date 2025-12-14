@@ -19,7 +19,7 @@ export const Api = {
     async getMarketData(): Promise<MarketData[]> {
         try {
             console.log('Fetching market ticks from:', MARKET_DATA_API_URL);
-            const response = await fetch(`${MARKET_DATA_API_URL}/api/market-data`);
+            const response = await fetch(`${MARKET_DATA_API_URL}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -37,7 +37,7 @@ export const Api = {
     async getTradeDecisions(): Promise<TradeDecision[]> {
         try {
             console.log('Fetching market ticks from:', TRADE_DECISIONS_API_URL);
-            const response = await fetch(`${TRADE_DECISIONS_API_URL}/api/orders`);
+            const response = await fetch(`${TRADE_DECISIONS_API_URL}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -55,7 +55,7 @@ export const Api = {
     async getOrderExecutions(): Promise<OrderExecution[]> {
         try {
             console.log('Fetching market ticks from:', ORDER_EXECUTIONS_API_URL);
-            const response = await fetch(`${ORDER_EXECUTIONS_API_URL}/api/trades`);
+            const response = await fetch(`${ORDER_EXECUTIONS_API_URL}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

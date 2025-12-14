@@ -431,7 +431,7 @@ kubectl config set-context --current --namespace=bitbuddy
 
 kubectl port-forward pod/XXX 5005:5005
 
- helm repo add eks https://aws.github.io/eks-charts                                                                    ✔  bitbuddy/bitbuddy 󱃾  21:30:22 
+ helm repo add eks https://aws.github.io/eks-charts
 
 helm repo update
 
