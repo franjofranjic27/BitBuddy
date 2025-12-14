@@ -73,7 +73,7 @@ export const Api = {
     async getPriceHistory(symbol: string): Promise<MarketData[]> {
         try {
             console.log('Fetching market ticks from:', MARKET_DATA_API_URL);
-            const response = await fetch(`${MARKET_DATA_API_URL}/api/market-data/symbol?symbol=${symbol}`);
+            const response = await fetch(`${MARKET_DATA_API_URL}/symbol?symbol=${symbol}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
