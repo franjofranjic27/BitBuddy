@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/order-exeuction")
+@RequestMapping("/order-execution")
 @RequiredArgsConstructor
 public class OrderDecisionController {
 
