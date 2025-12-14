@@ -116,7 +116,7 @@ frontend:
 
 datasource:
   username: bitbuddy
-  password: secret
+  password: secretsecret
   url: jdbc:postgresql://bitbuddy.c72ugcukuhdk.us-east-1.rds.amazonaws.com:5432/bitbuddy
 
 postgresql:
