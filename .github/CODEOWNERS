@@ -1,0 +1,11 @@
+# Global — all PRs require review from at least one owner
+* @franjofranjic27
+
+# Infrastructure and deployment
+/helm/                  @franjofranjic27
+/infrastructure/        @franjofranjic27
+/docker/                @franjofranjic27
+/docker-compose.yml     @franjofranjic27
+
+# CI/CD pipelines
+/.github/workflows/     @franjofranjic27
