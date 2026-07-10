@@ -30,10 +30,14 @@ Use the most specific scope that applies. Omit the scope for cross-cutting chang
 
 | Scope | Path | When to use |
 |---|---|---|
-| `api` | `finyo-api/` | Spring Boot application code |
-| `infra` | `compose.yml`, Dockerfile, deployment configs | Docker, docker-compose, infrastructure |
+| `market-data` | `market-data-service/` | Market data service |
+| `decision` | `order-decision-service/` | Order decision service |
+| `execution` | `order-execution-service/` | Order execution service |
+| `common` | `common/` | Shared library |
+| `ui` | `frontend/` | React frontend |
+| `infra` | `docker-compose.yml`, `docker/`, `helm/`, `infrastructure/` | Docker, Helm, CloudFormation |
 | `config` | Root-level config files | Environment, build, or project-level config |
-| `ci` | `.github/workflows/` | GitHub Actions workflows, Dependabot |
+| `ci` | `.github/workflows/` | GitHub Actions workflows, Renovate |
 
 ## Rules
 
