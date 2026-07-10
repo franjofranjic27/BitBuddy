@@ -11,9 +11,6 @@ jobs:
     if: github.actor != 'dependabot[bot]'
     name: Build and analyze
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: finyo-api
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,4 +40,4 @@ jobs:
       - name: Build, test and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=franjofranjic27_finyo
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=franjofranjic27_BitBuddy -Dsonar.organization=franjofranjic27
