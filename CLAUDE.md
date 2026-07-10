@@ -132,3 +132,18 @@ See `frontend/src/services/api.ts`.
 ## Testing
 
 Integration tests use **TestContainers** (real Postgres + Kafka containers). They live under `src/integration-test/` in each service and run via Maven Failsafe (`mvn verify`). Unit tests use MockMvc and run via Surefire (`mvn test`).
+
+## Repo Standards, PR & Issue Templates
+
+Repo-wide conventions are defined in
+[franjofranjic27/.github](https://github.com/franjofranjic27/.github)
+(`REPO_STANDARDS.md`). Issue and PR templates are inherited from that repo —
+do not add per-repo templates here. For specialized PRs use the central
+templates via `gh pr create --body-file`:
+
+- Dependency updates (TLCM/Renovate follow-ups): `PULL_REQUEST_TEMPLATE/dependency-update.md`
+- SonarQube/SonarCloud fixes: `PULL_REQUEST_TEMPLATE/sonar-fix.md`
+
+The `docs/` folder is published as a MkDocs Material site to
+https://franjofranjic27.github.io/BitBuddy/ (`docs.yml` workflow); new docs
+pages must be added to the `nav` in `mkdocs.yml`.

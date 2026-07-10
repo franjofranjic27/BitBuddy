@@ -60,3 +60,5 @@ terraform.tfplan
 *.pem
 *.key
 .aws/
+# MkDocs build output
+site/

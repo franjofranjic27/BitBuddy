@@ -1,215 +1,148 @@
-# BitBuddy - Your Crypto Trading Bot
+# BitBuddy
 
-Ein modularer Krypto-Trading-Bot auf Basis von **Spring Boot (Java 21)** in einer **Microservice-Monorepo**-Architektur.
-Jeder Service besitzt seine eigene Datenbank und ist klar abgegrenzt.
+[![CI](https://img.shields.io/github/actions/workflow/status/franjofranjic27/BitBuddy/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/franjofranjic27/BitBuddy/actions/workflows/ci.yml)
+[![Quality Gate](https://img.shields.io/sonar/quality_gate/franjofranjic27_BitBuddy?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/summary/overall?id=franjofranjic27_BitBuddy)
+[![Coverage](https://img.shields.io/sonar/coverage/franjofranjic27_BitBuddy?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/summary/overall?id=franjofranjic27_BitBuddy)
+[![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge)](#tech-stack)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
----
+BitBuddy 🌕 is an experimental crypto trading bot: a Spring Boot microservice
+monorepo that streams market data from exchanges (Kraken, KuCoin), applies
+trading strategies (e.g. MA cross) and executes or simulates orders — services
+communicate via Kafka, each owning its own PostgreSQL database.
 
-## 📋 Überblick
+## Project Status
 
-**BitBuddy** ist ein experimenteller Trading-Bot für Kryptowährungen mit modularer Architektur:
+Educational/experimental project — no claim to profitability, use at your own
+risk. Deployable to Kubernetes (Minikube or AWS EKS) via the included Helm
+chart; images are pushed to Docker Hub by the release workflow.
 
-- **Market Data Service** – Streamt Preise von Exchanges (Kraken, KuCoin, ...) und publiziert auf Kafka
-- **Trade Decision Service** – Wendet Handelsstrategien an (z.B. MA-Cross) und erzeugt Signale
-- **Order Execution Service** – Führt Orders aus oder simuliert sie
+## Services
 
----
+| Service | Role |
+|---|---|
+| **market-data-service** | Streams trades/prices from exchanges (Kraken, KuCoin), normalizes and persists them, publishes events to Kafka (`market-data-topic`) |
+| **order-decision-service** | Consumes market data, applies trading strategies (e.g. MA cross) and publishes decisions (`trade-decision-topic`) |
+| **order-execution-service** | Consumes decisions, transforms them into executable orders, sends them to the exchange or simulates execution, persists executions |
+| **common** | Shared library |
+| **frontend** | React + Vite dashboard |
 
-## 🏗️ Services
+## Quick Start
 
-### Market Data Service
-
-Streamt Trades/Preise von Exchanges (Kraken, KuCoin), normalisiert und persistiert diese in PostgreSQL, publiziert
-Events auf Kafka (`market-data-topic`).
-
-### Trade Decision Service
-
-Konsumiert Marktdaten von Kafka, wendet Trading-Strategien an (z.B. MA-Cross) und publiziert Handelsentscheidungen (
-`trade-decision-topic`).
-
-### Order Execution Service
-
-Konsumiert Handelsentscheidungen, transformiert diese in ausführbare Orders und sendet sie an die Exchange oder
-simuliert die Ausführung. Persistiert Executions in PostgreSQL.
-
----
-
-## 🚀 Quick Start
+**Prerequisites:** Java 21, Maven, Docker with Compose
 
 ```bash
-# Infrastruktur starten (Kafka, PostgreSQL)
+# 1. Start infrastructure (Kafka, PostgreSQL)
 docker-compose up -d
 
-# Module bauen
+# 2. Build all modules
 mvn -T 1C clean install
 
-# Service starten (z.B. Market Data Service)
+# 3. Start a service (e.g. market data)
 cd market-data-service
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
-
-# Stoppen
-docker-compose down
 ```
 
-**Kafka Debug:**
+**Kafka debug:**
 
 ```bash
-# Topics anzeigen
 docker exec -it kafka kafka-topics.sh --bootstrap-server kafka:9092 --list
-
-# Nachrichten konsumieren
 docker exec -it kafka kafka-console-consumer.sh --bootstrap-server kafka:9092 \
   --topic market-data-topic --from-beginning --timeout-ms 5000
 ```
 
----
+## Configuration
 
-## ⚙️ Konfiguration
-
-### Exchange Adapter
-
-Interface `MarketDataStreamingService` mit Implementierungen für verschiedene Exchanges (Kraken, KuCoin). Austausch
-erfolgt via Konfiguration:
+Exchange adapters implement `MarketDataStreamingService` (Kraken, KuCoin);
+switching exchanges is pure configuration — the factory resolves the bean
+dynamically:
 
 ```yaml
 marketdata:
-  provider: krakenMarketDataStreamingService  # oder kucoinMarketDataStreamingService
+  provider: krakenMarketDataStreamingService  # or kucoinMarketDataStreamingService
   tradingPairs:
     - BTC/USD
     - ETH/USD
-
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/marketdata
-    username: market
-    password: secret
-  kafka:
-    bootstrap-servers: localhost:9092
 ```
 
-Die Factory löst den Bean dynamisch auf – kein Code-Refactor beim Exchange-Wechsel nötig.
+## Trading Strategy: MA Cross (MA5/MA7)
 
----
+Two simple moving averages with window sizes 5 and 7
+(`SMA_n = (sum of last n prices) / n`):
 
-## 🧪 Tests
+- **BUY** — short SMA crosses above the long SMA
+- **SELL** — short SMA crosses below the long SMA
 
-```bash
-mvn verify
-```
+Edge cases: fewer than 7 prices → no signal; equal SMAs → no direction change;
+optional debounce under high volatility.
 
-**Empfehlungen:**
+## Deployment
 
-- Exchange-Adapter mocken (kein Live-WebSocket)
-- Integrationstests mit Testcontainers (Kafka, PostgreSQL)
-- Strategie-Signale verifizieren
-
----
-
-## 📈 Trading-Strategie: MA Cross (MA5/MA7)
-
-Berechnet zwei einfache gleitende Durchschnitte (SMA) mit Fenstergröße 5 und 7:
-
-- **BUY**: Short SMA kreuzt Long SMA nach oben
-- **SELL**: Short SMA kreuzt Long SMA nach unten
-
-**Formel:** `SMA_n = (Summe der letzten n Preise) / n`
-
-**Edge Cases:**
-
-- Weniger als 7 Preise → kein Signal
-- SMA-Gleichheit → kein Richtungswechsel
-- Optional: Debounce bei hoher Volatilität
-
----
-
-## ☸️ Deployment: Kubernetes (Minikube)
+### Kubernetes (Minikube)
 
 ```bash
-# Minikube starten
 minikube start
-
-# Helm Deployment
 cd helm
 helm install bitbuddy . -n bitbuddy --create-namespace -f values.yaml -f values-dev.yaml
-
-# Status prüfen
 kubectl get pods -n bitbuddy
-kubectl logs <pod> -n bitbuddy
-
-# Optional: Kafka Debug
-kubectl exec -n bitbuddy -it <kafka-pod> -- \
-  kafka-topics.sh --bootstrap-server localhost:9092 --list
 ```
 
----
+### AWS (EKS)
 
-## ☁️ Deployment: AWS (EKS)
-
-### CloudFormation Reihenfolge
-
-1. **Base Setup**: `base-setup.yaml` (VPC, Subnets, Security Groups, IAM Rollen)
-2. **EKS Cluster**: `eks.yaml` (IAM Rollen-ARN kopieren)
-3. **RDS**: `rds.yaml` (PostgreSQL)
-
-### Vorbereitung
+CloudFormation order: `base-setup.yaml` (VPC, subnets, IAM) → `eks.yaml` →
+`rds.yaml` (PostgreSQL), then:
 
 ```bash
-open ~/.aws/credentials
 aws eks update-kubeconfig --region us-east-1 --name bitbuddy
 kubectl create namespace bitbuddy
 kubectl config set-context --current --namespace=bitbuddy
-```
-
-### Helm Deployment
-
-```bash
 helm install bitbuddy helm
-```
 
-### Nginx Ingress Controller (LoadBalancer)
-
-```bash
-# Repository hinzufügen
+# Nginx ingress controller (LoadBalancer)
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-
-# Ingress Controller installieren
 helm install ingress-nginx ingress-nginx/ingress-nginx \
   --set controller.service.type=LoadBalancer \
-  --namespace ingress-nginx \
-  --create-namespace
-
-# Warten bis bereit
-kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=120s
-
-# Status prüfen
-kubectl get svc -n ingress-nginx ingress-nginx-controller
+  --namespace ingress-nginx --create-namespace
 ```
 
-### Prüfung
+## Tech Stack
 
-```bash
-kubectl get nodes
-kubectl get pods
-kubectl logs <pod>
-```
+| Technology | Version | Purpose |
+|---|---|---|
+| Java | 21 | Language |
+| Spring Boot | 3.5 | Service framework |
+| Apache Kafka | — | Inter-service messaging |
+| PostgreSQL | — | Per-service persistence |
+| React + Vite | 19 / 7 | Frontend dashboard |
+| Helm / Kubernetes | — | Deployment (Minikube, AWS EKS) |
+| Testcontainers | — | Integration tests (Kafka, PostgreSQL) |
 
----
+## Security & Secrets
 
-## 🔒 Sicherheit & Secrets
+Educational project — no full secrets management. Minimum measures: no API
+keys in the repository (environment variables or local `.env` files), no
+plaintext credentials in `application.yml`. For production scenarios use
+Kubernetes Secrets, SOPS, Vault or AWS KMS.
 
-Da es sich um ein Schulungs-/Lehrprojekt handelt, wird kein umfangreiches Secrets Management umgesetzt. Minimale
-Massnahmen:
+## Documentation
 
-- Keine API Keys im Git Repository (Umgebungsvariablen oder lokale `.env` Dateien)
-- Keine sensiblen Zugangsdaten in Klartext in `application.yml`
-- Für produktive Szenarien: Einsatz von Kubernetes Secrets, SOPS, Vault, AWS KMS empfohlen.
+| Document | Description |
+|---|---|
+| [Docs site](https://franjofranjic27.github.io/BitBuddy/) | Rendered documentation (GitHub Pages) |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, module structure, tech stack |
+| [docs/COMMIT_CONVENTION.md](docs/COMMIT_CONVENTION.md) | Commit message format and rules |
+| [docs/TESTING.md](docs/TESTING.md) | How to run and write tests |
+| [docs/WORKFLOWS.md](docs/WORKFLOWS.md) | GitHub Actions CI/CD workflows |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute to this project |
 
----
+Repo-wide conventions (README/badge standard, PR and issue templates) live in
+[franjofranjic27/.github](https://github.com/franjofranjic27/.github).
 
-## ⚠️ Haftungsausschluss
+## Disclaimer
 
-Bildungs- und Experimentierprojekt. Kein Anspruch auf Profitabilität. Einsatz auf eigene Verantwortung.
+Educational and experimental project. No claim to profitability. Use at your
+own risk.
+
+## License
+
+[MIT](LICENSE)
