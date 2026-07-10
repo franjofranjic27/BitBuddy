@@ -1,0 +1,77 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "timezone": "Europe/Zurich",
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Frontend commits with scope ui",
+      "matchManagers": ["npm"],
+      "semanticCommitScope": "ui"
+    },
+    {
+      "description": "Workflow commits with scope ci, automerge patch/minor/digest",
+      "matchManagers": ["github-actions"],
+      "semanticCommitScope": "ci",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "Helm chart dependencies with scope infra",
+      "matchManagers": ["helmv3", "helm-values", "dockerfile", "docker-compose"],
+      "semanticCommitScope": "infra"
+    },
+    {
+      "description": "Never automerge Spring Boot, wait 3 days (drags half the dependency management along)",
+      "matchPackageNames": ["org.springframework.boot:**"],
+      "automerge": false,
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "Automerge Maven patch updates when CI is green",
+      "matchManagers": ["maven"],
+      "matchUpdateTypes": ["patch"],
+      "matchPackageNames": ["!org.springframework.boot:**"],
+      "automerge": true
+    },
+    {
+      "description": "Update Testcontainers together",
+      "matchPackageNames": ["org.testcontainers:**"],
+      "groupName": "testcontainers"
+    },
+    {
+      "description": "Update React core together",
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "groupName": "react"
+    },
+    {
+      "description": "Group JS dev toolchain, automerge minor/patch",
+      "matchDepTypes": ["devDependencies"],
+      "matchPackageNames": ["eslint", "eslint-**", "typescript-eslint", "typescript", "vite", "@vitejs/**", "globals"],
+      "groupName": "js dev tooling",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Majors individually, no automerge, 3-day cooldown",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "minimumReleaseAge": "3 days"
+    }
+  ]
+}
